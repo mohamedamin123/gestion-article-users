@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text Sizes -->
+    <dimen name="ssp_12">12sp</dimen>
+    <dimen name="ssp_14">14sp</dimen>
+    <dimen name="ssp_16">16sp</dimen>
+    <dimen name="ssp_18">18sp</dimen>
+    <dimen name="ssp_20">20sp</dimen>
+    <dimen name="ssp_22">22sp</dimen>
+
+    <!-- View Sizes -->
+    <dimen name="sdp_8">8dp</dimen>
+    <dimen name="sdp_12">12dp</dimen>
+    <dimen name="sdp_16">16dp</dimen>
+    <dimen name="sdp_40">40dp</dimen>
+    <dimen name="sdp_48">48dp</dimen>
+    <dimen name="sdp_56">56dp</dimen>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Gestion de Stock</string>
+    <string name="button_client">Liste des Clients</string>
+    <string name="button_modele">Liste des Modèles</string>
+    <string name="bonjour">Bonjour Mr/Mdm</string>
+    <string name="titre">Titre</string>
+    <string name="name">name</string>
+    <string name="nom_de_modele">nom de modele</string>
+    <string name="annuler">Annuler</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="diter">Éditer</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="prenom">Prenom</string>
+    <string name="nom">Nom</string>
+    <string name="telephone">Téléphone</string>
+    <string name="email">Email</string>
+    <string name="editer_client">Editer CLient</string>
+    <string name="rechercher_par_nom">Rechercher par nom</string>
+
+</resources>

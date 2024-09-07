@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background"
+
+    android:padding="16dp">
+
+    <!-- Titre -->
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/editer_client"
+    android:textSize="24sp"
+    android:textColor="@android:color/black"
+    android:layout_marginBottom="16dp"
+        android:layout_gravity="center"
+        style="@style/style_tv_title_post"/>
+
+    <!-- Champs de saisie -->
+    <EditText
+        android:id="@+id/editPrenom"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prenom"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editNom"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/nom"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTel"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/telephone"
+        android:inputType="phone"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        style="@style/CustomEditTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:minHeight="48dp" />
+
+    <!-- LinearLayout pour les boutons Retour et Enregistrer -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="@style/ButtonContainerStyle">
+
+        <!-- Bouton Retour -->
+        <Button
+            android:id="@+id/btnRetour"
+            style="@style/CustomButtonStyleAnnuler"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/annuler" />
+
+        <!-- Bouton Enregistrer -->
+        <Button
+            android:id="@+id/btnSave"
+            style="@style/CustomButtonStyleAjouter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ajouter" />
+
+    </LinearLayout>
+
+</LinearLayout>

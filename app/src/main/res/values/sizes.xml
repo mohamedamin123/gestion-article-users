@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text Sizes using SSP -->
+    <dimen name="text_size_small">@dimen/ssp_12</dimen>      <!-- Small text -->
+    <dimen name="text_size_normal">@dimen/ssp_14</dimen>     <!-- Default text size -->
+    <dimen name="text_size_medium">@dimen/ssp_16</dimen>     <!-- Medium text size -->
+    <dimen name="text_size_large">@dimen/ssp_18</dimen>      <!-- Large text size -->
+    <dimen name="text_size_xlarge">@dimen/ssp_20</dimen>     <!-- Extra large text size -->
+    <dimen name="text_size_headline">@dimen/ssp_22</dimen>   <!-- Headline text size -->
+    <dimen name="text_size_subtitle">@dimen/ssp_18</dimen>   <!-- Subtitle text size -->
+    <dimen name="text_size_caption">@dimen/ssp_12</dimen>    <!-- Caption text size -->
+
+    <!-- Button Sizes using SDP -->
+    <dimen name="button_text_size_small">@dimen/ssp_14</dimen>    <!-- Small button text size -->
+    <dimen name="button_text_size_normal">@dimen/ssp_16</dimen>   <!-- Normal button text size -->
+    <dimen name="button_text_size_large">@dimen/ssp_18</dimen>    <!-- Large button text size -->
+    <dimen name="button_padding_small">@dimen/sdp_8</dimen>       <!-- Padding for small buttons -->
+    <dimen name="button_padding_normal">@dimen/sdp_12</dimen>      <!-- Padding for normal buttons -->
+    <dimen name="button_padding_large">@dimen/sdp_16</dimen>       <!-- Padding for large buttons -->
+    <dimen name="button_height_small">@dimen/sdp_40</dimen>       <!-- Height for small buttons -->
+    <dimen name="button_height_normal">@dimen/sdp_48</dimen>      <!-- Height for normal buttons -->
+    <dimen name="button_height_large">@dimen/sdp_56</dimen>       <!-- Height for large buttons -->
+</resources>
