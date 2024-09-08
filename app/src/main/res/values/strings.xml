@@ -16,5 +16,18 @@
     <string name="email">Email</string>
     <string name="editer_client">Editer CLient</string>
     <string name="rechercher_par_nom">Rechercher par nom</string>
+    <string name="reste_prix">Reste prix</string>
+    <string name="avance">Avance</string>
+    <string name="total">Total</string>
+    <string name="commande">Commande</string>
+    <string name="prix">Prix</string>
+    <string name="modele">Modele</string>
+    <string name="image">Image</string>
+    <string name="ajouter_modele">Ajouter Modele</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="couleur">Couleur</string>
+    <string name="quantite">Quantite</string>
+    <string name="_0">0</string>
 
 </resources>

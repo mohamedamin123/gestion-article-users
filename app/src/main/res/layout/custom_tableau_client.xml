@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center"
+    android:background="@drawable/custom_table_row_background">
+
+
+    <TextView
+        android:id="@+id/column1Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="ID"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column2Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Nom"
+        android:gravity="center"
+        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column3Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Prénom"
+        android:gravity="center"
+        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column4Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Email"
+        android:gravity="center"
+        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column5Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Téléphone"
+        android:gravity="center"
+        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column6Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Nom complet"
+        android:gravity="center"/>
+
+</LinearLayout>

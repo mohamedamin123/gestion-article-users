@@ -33,6 +33,7 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
         super.onCreate(savedInstanceState);
         binding = ActivityListeClientsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
         modelClient = new ViewModelProvider(this).get(ViewModelClient.class);
 
         // Initialiser les données
@@ -75,7 +76,9 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
 
     @Override
     public void onUserClick(Client client) {
-        Toast.makeText(this, "Utilisateur cliqué : " + client.getPrenom() + " " + client.getNom(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ListeClientsActivity.this, ViewClientActivity.class);
+            intent.putExtra("clientId", client.getIdClient());
+            startActivity(intent);
     }
 
     @Override
