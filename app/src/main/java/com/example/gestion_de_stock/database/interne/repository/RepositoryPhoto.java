@@ -49,12 +49,12 @@ public class RepositoryPhoto {
         });
     }
 
-    public void deleteAllByArticle(Integer id)
+    public void deleteAllByCommande(Integer id)
     {
         MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                PhotoDAO.deleteAllByArticle(id);
+                PhotoDAO.deleteAllByCommande(id);
             }
         });
     }

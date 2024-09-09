@@ -5,14 +5,12 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,10 +28,6 @@ public class Client {
     private Boolean statut;
 
     @Ignore
-    private List<Commande> commandes;
-
-    // Constructor with only necessary fields, marked as @Ignore for Room
-    @Ignore
     public Client(String prenom, String nom, String telephone, String email) {
         this.prenom = prenom;
         this.nom = nom;
@@ -41,7 +35,6 @@ public class Client {
         this.email = email;
     }
 
-    // Constructor with idClient, also marked as @Ignore for Room
     public Client(Integer idClient, String prenom, String nom, String telephone, String email) {
         this(prenom, nom, telephone, email);
         this.idClient = idClient;
@@ -49,9 +42,12 @@ public class Client {
 
     // Optional custom method for full name
     public String getFullName() {
-
         return this.prenom + " " + this.nom;
     }
+
+    // You can add a list of articles if needed for logic but not directly managed by Room
+    @Ignore
+    private List<Commande> commandes;
 
     public Integer getIdClient() {
         return idClient;

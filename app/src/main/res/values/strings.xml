@@ -29,5 +29,6 @@
     <string name="couleur">Couleur</string>
     <string name="quantite">Quantite</string>
     <string name="_0">0</string>
+    <string name="add_row">Ajouter autre color</string>
 
 </resources>

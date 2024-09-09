@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="ID"
+        android:text="@string/modele"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Nom"
+        android:text="@string/prix"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
@@ -33,7 +33,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Prénom"
+        android:text="@string/commande"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
@@ -42,7 +42,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Email"
+        android:text="@string/total"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
@@ -51,7 +51,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Téléphone"
+        android:text="@string/avance"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
@@ -60,7 +60,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Nom complet"
+        android:text="@string/reste_prix"
         android:gravity="center"/>
 
 </LinearLayout>

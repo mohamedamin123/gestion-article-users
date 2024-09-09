@@ -31,9 +31,9 @@ public class ViewModelPhoto extends AndroidViewModel {
        repositiry.deletePhoto(Photos);
     }
 
-    public void deleteAllByArticle(Integer id)
+    public void deleteAllByCommande(Integer id)
     {
-       repositiry.deleteAllByArticle(id);
+       repositiry.deleteAllByCommande(id);
     }
 
 

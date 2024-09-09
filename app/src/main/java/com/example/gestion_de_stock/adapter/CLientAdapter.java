@@ -1,11 +1,16 @@
 package com.example.gestion_de_stock.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.gestion_de_stock.R;
@@ -21,60 +26,71 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
     private List<Client> clients;
     private onManipuleCLient listener;
 
-
-    public CLientAdapter(Context context, List<Client> evaluations, onManipuleCLient listener) {
+    public CLientAdapter(Context context, List<Client> clients, onManipuleCLient listener) {
         this.context = context;
-        this.clients = evaluations;
-        this.listener=listener;
+        this.clients = clients;
+        this.listener = listener;
     }
-
-    public CLientAdapter(Context context, List<Client> evaluations) {
-        this.context = context;
-        this.clients = evaluations;
-    }
-
-
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(context);
-        View v= inflater.inflate(R.layout.custom_item_client,parent,false);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.custom_item_client, parent, false);
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CLientAdapter.MyViewHolder holder, int position) {
-        // Récupérer l'utilisateur actuel
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Client client = clients.get(position);
 
-        // Lier les données de l'utilisateur avec les éléments de la vue
+        // Bind data
         holder.binding.tvName.setText(client.getFullName());
         holder.binding.tvTel.setText(client.getTelephone());
 
-        // Gérer l'événement de clic sur l'élément entier
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onUserClick(client); // Appeler le listener pour gérer le clic
             }
         });
 
-        // Gérer l'événement de clic sur le bouton Supprimer
-        holder.binding.btnSupprimer.setOnClickListener(v -> {
+        // Handle click on phone icon
+        holder.binding.imgPhone.setOnClickListener(v -> {
+            String phoneNumber = client.getTelephone();
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + phoneNumber));
+
+            // Check for permission
+            if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // Request permission
+                ActivityCompat.requestPermissions((AppCompatActivity) context, new String[]{android.Manifest.permission.CALL_PHONE}, 1);
+                return;
+            }
+
+            context.startActivity(callIntent);
+        });
+
+        // Handle click on the edit button
+        holder.binding.btnEditer.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onDeleteCLient(client.getIdClient(), position); // Appeler le listener pour supprimer l'utilisateur
+                listener.onChangeCLient(client.getIdClient());
             }
         });
 
-        // Gérer l'événement de clic sur le bouton Éditer
-        holder.binding.btnEditer.setOnClickListener(v -> {
+        // Handle click on the delete button
+        holder.binding.btnSupprimer.setOnClickListener(v -> {
             if (listener != null) {
-                listener.onChangeCLient(client.getIdClient()); // Appeler le listener pour éditer l'utilisateur
+                listener.onDeleteCLient(client.getIdClient(), position);
+            }
+        });
+
+        holder.binding.imgPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onAppele(client);
             }
         });
     }
-
-
 
     @Override
     public int getItemCount() {
@@ -89,17 +105,16 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
     public interface onManipuleCLient {
         void onDeleteCLient(Integer id, int position);
         void onChangeCLient(Integer id);
-        void onUserClick(Client client); // Ajouter cette méthode
+        void onUserClick(Client client);
+        void onAppele(Client client);
     }
 
-
-    public  class MyViewHolder extends RecyclerView.ViewHolder{
-
+    public class MyViewHolder extends RecyclerView.ViewHolder {
         CustomItemClientBinding binding;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            binding=CustomItemClientBinding.bind(itemView);
-
+            binding = CustomItemClientBinding.bind(itemView);
         }
     }
 }

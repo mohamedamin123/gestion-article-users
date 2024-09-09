@@ -7,28 +7,28 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.gestion_de_stock.database.interne.entity.Commande;
-import com.example.gestion_de_stock.database.interne.repository.ReposirotyCommande;
+import com.example.gestion_de_stock.database.interne.repository.RepositoryCommande;
 
 import java.util.List;
 
 public class ViewModelCommande extends AndroidViewModel {
-    ReposirotyCommande repositiry;
+    RepositoryCommande repositiry;
     public ViewModelCommande(@NonNull Application application) {
         super(application);
-        repositiry=new ReposirotyCommande(application);
+        repositiry=new RepositoryCommande(application);
     }
 
-    public void insertCommande(Commande... Commandes)
+    public void insertCommande(Commande... commandes)
     {
-       repositiry.insertCommande(Commandes);
+       repositiry.insertCommande(commandes);
     }
-    public  void updateCommande(Commande... Commandes)
+    public  void updateCommande(Commande... commandes)
     {
-       repositiry.updateCommande(Commandes);
+       repositiry.updateCommande(commandes);
     }
-    public void deleteCommande(Commande... Commandes)
+    public void deleteCommande(Commande... commandes)
     {
-       repositiry.deleteCommande(Commandes);
+       repositiry.deleteCommande(commandes);
     }
 
     public void deleteCommandeById(Integer id)
@@ -41,14 +41,19 @@ public class ViewModelCommande extends AndroidViewModel {
           return repositiry.findCommandeById(id);
     }
 
+    public LiveData<List<Commande>> findCommandeByIdCLient(Integer id)
+    {
+        return repositiry.findCommandeByIdCLient(id);
+    }
+
     public LiveData<List<Commande>> findAllCommande()
     {
         return  repositiry.findAllCommande();
     }
 
-    public LiveData<Commande> findCommandeByCLientId(Integer id)
+    public LiveData<Commande> findCommandeByNom(String nom)
     {
-        return repositiry.findCommandeByCLientId(id);
+        return repositiry.findCommandeByNom(nom);
     }
 
 }

@@ -3,88 +3,206 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
-
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background">
 
     <!-- Titre -->
     <TextView
-        android:layout_marginVertical="10dp"
         android:id="@+id/textTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ajouter_modele"
-        android:textSize="24sp"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="center"
-        style="@style/style_tv_title_post"/>
+        android:textSize="30sp" 
+    android:textColor="@android:color/black"
+    android:layout_marginBottom="16dp"
+    android:layout_gravity="center"
+    android:textStyle="bold" 
+    style="@style/style_tv_title_post"/>
 
-    <!-- Champs de saisie -->
-    <EditText
-        android:id="@+id/editModele"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/modele"
-        android:inputType="text"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/editPrix"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/prix"
-        android:inputType="number"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/editCommande"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/commande"
-        android:inputType="number"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/editTotal"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/total"
-        android:inputType="number"
-        android:enabled="false"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/editAvance"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/avance"
-        android:inputType="number"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/editReste"
-        style="@style/CustomEditTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/reste_prix"
-        android:inputType="number"
-        android:enabled="false"
-        android:minHeight="48dp" />
-
-
-
-    <!-- LinearLayout pour les boutons Retour et Enregistrer -->
+    <!-- Label et Champ Modèle en même ligne -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        style="@style/ButtonContainerStyle">
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/labelModele"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/modele"
+            android:textSize="17sp" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/editModele"
+            android:background="@drawable/search_bar_background"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/modele"
+            android:inputType="text"
+            android:layout_weight="3"
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <!-- Label et Champ Prix en même ligne -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/labelPrix"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/prix"
+            android:textSize="17sp" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/editPrix"
+            android:background="@drawable/search_bar_background"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/prix"
+            android:inputType="number"
+            android:layout_weight="3"
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <!-- Label et Champ Commande en même ligne -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/labelCommande"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/commande"
+            android:textSize="17sp" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/editCommande"
+            style="@style/CustomEditTextStyle"
+            android:background="@drawable/search_bar_background"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/commande"
+            android:inputType="number"
+            android:layout_weight="3"
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <!-- Label et Champ Total en même ligne -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/labelTotal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/total"
+            android:textSize="17sp" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/editTotal"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_bar_background"
+            android:hint="@string/total"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_weight="3"
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <!-- Label et Champ Avance en même ligne -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/labelAvance"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/avance"
+            android:textSize="17sp" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/editAvance"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/avance"
+            android:inputType="number"
+            android:background="@drawable/search_bar_background"
+            android:layout_weight="3"
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <!-- Label et Champ Reste en même ligne -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+        <TextView
+            android:id="@+id/labelReste"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reste_prix"
+            android:textSize="17sp" 
+        android:textColor="@android:color/black"
+        android:textStyle="bold" 
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"/>
+        <EditText
+            android:id="@+id/editReste"
+            style="@style/CustomEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/reste_prix"
+            android:inputType="number"
+            android:enabled="false"
+            android:layout_weight="3"
+            android:background="@drawable/search_bar_background"
+
+            android:minHeight="48dp"/>
+    </LinearLayout>
+
+    <!-- Boutons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="bottom">
 
         <!-- Bouton Retour -->
         <Button
@@ -93,7 +211,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/annuler" />
+            android:textStyle="bold"
+            android:text="@string/annuler"/>
 
         <!-- Bouton Enregistrer -->
         <Button
@@ -101,9 +220,10 @@
             style="@style/CustomButtonStyleAjouter"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/ajouter" />
+            android:textStyle="bold"
 
+            android:layout_weight="1"
+            android:text="@string/ajouter"/>
     </LinearLayout>
 
 </LinearLayout>

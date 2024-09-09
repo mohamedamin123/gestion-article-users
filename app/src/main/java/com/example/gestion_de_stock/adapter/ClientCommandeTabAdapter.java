@@ -13,27 +13,29 @@ import com.example.gestion_de_stock.util.ItemCommande;
 
 import java.util.List;
 
-public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommandeTabAdapter.ClientViewHolder> {
-    private final List<ItemCommande> items;
+public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommandeTabAdapter.ViewHolder> {
 
-    public ClientCommandeTabAdapter(List<ItemCommande> items) {
+    private List<ItemCommande> items;
+    private OnQuantityChangeListener onQuantityChangeListener;
+
+    public ClientCommandeTabAdapter(List<ItemCommande> items, OnQuantityChangeListener listener) {
         this.items = items;
-    }
-
-    @NonNull
-    @Override
-    public ClientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CustomCommandeClientBinding binding = CustomCommandeClientBinding.inflate(inflater, parent, false);
-        return new ClientViewHolder(binding);
+        this.onQuantityChangeListener = listener;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ClientViewHolder holder, int position) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        CustomCommandeClientBinding binding = CustomCommandeClientBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new ViewHolder(binding);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
         ItemCommande item = items.get(position);
         holder.binding.column1Data.setText(item.getColor());
         holder.binding.column2Data.setText(String.valueOf(item.getQte()));
 
+        // Add TextWatcher to update quantity
         holder.binding.column2Data.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -43,7 +45,10 @@ public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommand
                 try {
                     item.setQte(Integer.parseInt(s.toString()));
                 } catch (NumberFormatException e) {
-                    item.setQte(0); // Handle empty input
+                    item.setQte(0);
+                }
+                if (onQuantityChangeListener != null) {
+                    onQuantityChangeListener.onQuantityChanged();
                 }
             }
 
@@ -52,17 +57,19 @@ public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommand
         });
     }
 
-
-
     @Override
     public int getItemCount() {
         return items.size();
     }
 
-    public static class ClientViewHolder extends RecyclerView.ViewHolder {
-        final CustomCommandeClientBinding binding;
+    public interface OnQuantityChangeListener {
+        void onQuantityChanged();
+    }
 
-        public ClientViewHolder(CustomCommandeClientBinding binding) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        CustomCommandeClientBinding binding;
+
+        public ViewHolder(CustomCommandeClientBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -15,11 +15,11 @@ import java.util.List;
 public interface CommandeDAO {
 
     @Insert
-    void insertCommande(Commande... Commandes);
+    void insertCommande(Commande... commandes);
     @Update
-    void updateCommande(Commande... Commandes);
+    void updateCommande(Commande... commandes);
     @Delete
-    void deleteCommande(Commande... Commandes);
+    void deleteCommande(Commande... commandes);
 
 
 
@@ -29,9 +29,12 @@ public interface CommandeDAO {
     @Query("select * from Commande where Commande_id=:id")
     LiveData<Commande> findCommandeById(Integer id);
 
+    @Query("select * from Commande where idClient=:id")
+    LiveData<List<Commande>>  findCommandeByIdCLient(Integer id);
+
     @Query("select * from Commande")
     LiveData<List<Commande>> findAllCommande();
 
-    @Query("select * from Commande where idClient = :id")
-    LiveData<Commande> findCommandeByCLientId(Integer id);
+    @Query("select * from Commande where modele like '%' || :nom || '%' ")
+    LiveData<Commande> findCommandeByNom(String nom);
 }

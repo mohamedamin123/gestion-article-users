@@ -1,36 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="8dp"
-    android:gravity="center"
-    android:background="@drawable/custom_table_row_background">
+    android:padding="8dp">
 
-
-    <TextView
+    <EditText
         android:id="@+id/column1Data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/couleur"
-        android:textStyle="bold"
         android:gravity="center"
         android:minHeight="48dp"
-
-        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+        android:text="Color" />
 
     <EditText
         android:id="@+id/column2Data"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_weight="1"
-        android:autofillHints="@string/quantite"
-        android:gravity="center"
+        android:hint="Quantity"
         android:inputType="number"
-        android:minHeight="48dp"
-        android:text="@string/_0" /> <!-- Marge entre les colonnes -->
-
+        android:minHeight="48dp" />
 </LinearLayout>

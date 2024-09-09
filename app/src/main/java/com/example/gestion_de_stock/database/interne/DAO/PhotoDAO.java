@@ -27,13 +27,13 @@ public interface PhotoDAO {
     @Query("SELECT * FROM photo")
     LiveData<List<Photo>> findAllPhotos();
 
-    @Query("SELECT * FROM photo where article_id=:articleId")
-    LiveData<List<Photo>> findAllPhotosByArticle(Integer articleId);
+    @Query("SELECT * FROM photo where commande_id=:CommandeId")
+    LiveData<List<Photo>> findAllPhotosByCommande(Integer CommandeId);
 //--------------------------------------------------------------------------------------------delete
     @Query("delete  from photo ")
     void deleteAllPhoto();
-    @Query("delete FROM photo where  article_id=:articleId")
-    void deleteAllByArticle(Integer articleId);
+    @Query("delete FROM photo where  commande_id=:CommandeId")
+    void deleteAllByCommande(Integer CommandeId);
 
 
 

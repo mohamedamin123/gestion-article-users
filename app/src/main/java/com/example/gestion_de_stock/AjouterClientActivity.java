@@ -48,6 +48,11 @@ public class AjouterClientActivity extends AppCompatActivity {
             String prenom = binding.editPrenom.getText().toString().trim();
             String email = binding.editEmail.getText().toString().trim();
             String tel = binding.editTel.getText().toString().trim();
+
+            // Capitalize first letter of nom and prenom
+            nom = capitalizeFirstLetter(nom);
+            prenom = capitalizeFirstLetter(prenom);
+
             Client client=Client.builder()
                     .nom(nom)
                     .prenom(prenom)
@@ -73,6 +78,12 @@ public class AjouterClientActivity extends AppCompatActivity {
             finish(); // Revenir à la liste des clients
             startActivity(new Intent(AjouterClientActivity.this, ListeClientsActivity.class));
         });
+    }
+    private String capitalizeFirstLetter(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        return input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
     }
 
     @Override
@@ -100,6 +111,10 @@ public class AjouterClientActivity extends AppCompatActivity {
         String prenom = binding.editPrenom.getText().toString().trim();
         String email = binding.editEmail.getText().toString().trim();
         String tel = binding.editTel.getText().toString().trim();
+
+        capitalizeFirstLetter(nom);
+        capitalizeFirstLetter(prenom);
+
 
         shared.saveData(email, nom, prenom, tel);
     }

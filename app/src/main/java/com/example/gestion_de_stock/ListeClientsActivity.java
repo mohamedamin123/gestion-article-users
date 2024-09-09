@@ -1,13 +1,17 @@
 package com.example.gestion_de_stock;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,6 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ListeClientsActivity extends AppCompatActivity implements CLientAdapter.onManipuleCLient {
+    private static final int REQUEST_CALL_PHONE = 1;
     private ActivityListeClientsBinding binding;
     private CLientAdapter adapter;
     private List<Client> clients;
@@ -79,6 +84,21 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
             Intent intent = new Intent(ListeClientsActivity.this, ViewClientActivity.class);
             intent.putExtra("clientId", client.getIdClient());
             startActivity(intent);
+    }
+
+    @Override
+    public void onAppele(Client client) {
+        String phoneNumber = client.getTelephone();
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + phoneNumber));
+
+        // Check for permission
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, REQUEST_CALL_PHONE);
+            return;
+        }
+
+        startActivity(callIntent);
     }
 
     @Override
@@ -147,4 +167,17 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
         }
         adapter.updateList(filteredClients);
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, can now make the call
+            } else {
+                // Permission denied
+                Toast.makeText(this, "Permission denied to make calls", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }

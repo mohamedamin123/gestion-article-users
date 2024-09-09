@@ -10,41 +10,41 @@ import com.example.gestion_de_stock.database.interne.entity.Commande;
 
 import java.util.List;
 
-public class ReposirotyCommande {
+public class RepositoryCommande {
 
    CommandeDAO CommandeDAO;
 
 
-    public ReposirotyCommande(Application application) {
+    public RepositoryCommande(Application application) {
         MyRoomDataBase db=MyRoomDataBase.getDatabase(application);
         CommandeDAO= db.commandeDAO();
 
     }
 
-    public void insertCommande(Commande... Commandes)
+    public void insertCommande(Commande... commandes)
     {
         MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                CommandeDAO.insertCommande(Commandes);
+                CommandeDAO.insertCommande(commandes);
             }
         });
     }
-    public  void updateCommande(Commande... Commandes)
+    public  void updateCommande(Commande... commandes)
     {
         MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                CommandeDAO.updateCommande(Commandes);
+                CommandeDAO.updateCommande(commandes);
             }
         });
     }
-    public void deleteCommande(Commande... Commandes)
+    public void deleteCommande(Commande... commandes)
     {
         MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                CommandeDAO.deleteCommande(Commandes);
+                CommandeDAO.deleteCommande(commandes);
             }
         });
     }
@@ -66,14 +66,21 @@ public class ReposirotyCommande {
 
     }
 
+    public LiveData<List<Commande>>  findCommandeByIdCLient(Integer id)
+    {
+
+        return  CommandeDAO.findCommandeByIdCLient(id);
+
+    }
+
     public LiveData<List<Commande>> findAllCommande()
     {
               return  CommandeDAO.findAllCommande();
     }
 
-    public LiveData<Commande> findCommandeByCLientId(Integer id)
+    public LiveData<Commande> findCommandeByNom(String nom)
     {
-        return CommandeDAO.findCommandeByCLientId(id);
+        return CommandeDAO.findCommandeByNom(nom);
     }
 
 

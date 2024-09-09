@@ -20,9 +20,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity(tableName = "photo",
         foreignKeys = @ForeignKey(
-                entity = Article.class,
-                parentColumns = "article_id",
-                childColumns = "article_id",
+                entity = Commande.class,
+                parentColumns = "commande_id",
+                childColumns = "commande_id",
                 onDelete = ForeignKey.CASCADE))
 public class Photo {
 
@@ -37,11 +37,11 @@ public class Photo {
     private String photoUrl;
 
 //----------------------------------------------------------------------------------------foreignKey
-    @ColumnInfo(name = "article_id")
-    private Integer idArticle;
+    @ColumnInfo(name = "commande_id")
+    private Integer idCommande;
 
     @Ignore
-    private Article article;
+    private Commande commande;
 
 
     public byte[] getImageByte() {
@@ -76,19 +76,19 @@ public class Photo {
         this.photoUrl = photoUrl;
     }
 
-    public Integer getIdArticle() {
-        return idArticle;
+    public Integer getIdCommande() {
+        return idCommande;
     }
 
-    public void setIdArticle(Integer idArticle) {
-        this.idArticle = idArticle;
+    public void setIdCommande(Integer idCommande) {
+        this.idCommande = idCommande;
     }
 
-    public Article getArticle() {
-        return article;
+    public Commande getCommande() {
+        return commande;
     }
 
-    public void setArticle(Article article) {
-        this.article = article;
+    public void setCommande(Commande commande) {
+        this.commande = commande;
     }
 }
