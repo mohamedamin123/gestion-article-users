@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.gestion_de_stock.database.interne.entity.LigneCommande;
 import com.example.gestion_de_stock.database.interne.entity.Photo;
 import com.example.gestion_de_stock.database.interne.repository.RepositoryPhoto;
 
@@ -37,5 +38,19 @@ public class ViewModelPhoto extends AndroidViewModel {
     }
 
 
+    public void deletePhotoByID(Integer id)
+    {
+        repositiry.deletePhotoByID(id);
+    }
+
+
+    public LiveData<List<Photo>> findAllLigneCommande()
+    {
+        return  repositiry.findAllPhotos();
+    }
+
+    public LiveData<List<Photo>> findLigneCommandeByIdCommande(Integer id) {
+        return repositiry.findAllPhotosByCommande(id);
+    }
 
 }

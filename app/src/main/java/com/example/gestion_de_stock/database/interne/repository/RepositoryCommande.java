@@ -3,6 +3,7 @@ package com.example.gestion_de_stock.database.interne.repository;
 import android.app.Application;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.gestion_de_stock.database.interne.DAO.CommandeDAO;
 import com.example.gestion_de_stock.database.interne.MyRoomDataBase;
@@ -21,14 +22,13 @@ public class RepositoryCommande {
 
     }
 
-    public void insertCommande(Commande... commandes)
-    {
-        MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                CommandeDAO.insertCommande(commandes);
-            }
+    public LiveData<Long[]> insertCommande(Commande... commandes) {
+        MutableLiveData<Long[]> liveData = new MutableLiveData<>();
+        MyRoomDataBase.databaseWriteExecutor.execute(() -> {
+            Long[] insertedIds = CommandeDAO.insertCommande(commandes);
+            liveData.postValue(insertedIds); // Post the IDs to LiveData
         });
+        return liveData;
     }
     public  void updateCommande(Commande... commandes)
     {

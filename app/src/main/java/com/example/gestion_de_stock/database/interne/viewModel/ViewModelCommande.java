@@ -18,9 +18,8 @@ public class ViewModelCommande extends AndroidViewModel {
         repositiry=new RepositoryCommande(application);
     }
 
-    public void insertCommande(Commande... commandes)
-    {
-       repositiry.insertCommande(commandes);
+    public LiveData<Long[]> insertCommande(Commande... commandes) {
+        return repositiry.insertCommande(commandes);
     }
     public  void updateCommande(Commande... commandes)
     {

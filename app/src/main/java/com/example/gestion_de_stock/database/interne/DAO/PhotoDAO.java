@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Dao
 public interface PhotoDAO {
 //----------------------------------------------------------------------------------------------crud
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Photo... photo);
 
     @Update
@@ -34,6 +35,9 @@ public interface PhotoDAO {
     void deleteAllPhoto();
     @Query("delete FROM photo where  commande_id=:CommandeId")
     void deleteAllByCommande(Integer CommandeId);
+
+    @Query("delete  from photo where photo_id=:photo_id ")
+    void deletePhotoByID(int photo_id);
 
 
 

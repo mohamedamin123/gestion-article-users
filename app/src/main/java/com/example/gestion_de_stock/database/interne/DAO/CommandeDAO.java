@@ -15,7 +15,7 @@ import java.util.List;
 public interface CommandeDAO {
 
     @Insert
-    void insertCommande(Commande... commandes);
+    Long[] insertCommande(Commande... commandes);  //// Returns the row ID(s) of inserted commandes
     @Update
     void updateCommande(Commande... commandes);
     @Delete

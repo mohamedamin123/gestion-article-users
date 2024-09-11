@@ -13,11 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Entity(tableName = "photo",
         foreignKeys = @ForeignKey(
                 entity = Commande.class,
@@ -30,28 +25,21 @@ public class Photo {
     @ColumnInfo(name = "photo_id")
     private int id;
 
-    @ColumnInfo(name = "photo_uris")
-    private Uri photoUris;
+    @ColumnInfo(name = "photo_byte")
+    private byte[] photoBytes;
 
-    @ColumnInfo(name = "photo_url")
-    private String photoUrl;
-
-//----------------------------------------------------------------------------------------foreignKey
     @ColumnInfo(name = "commande_id")
     private Integer idCommande;
 
+    // Constructors
+    public Photo() {
+    }
     @Ignore
-    private Commande commande;
-
-
-    public byte[] getImageByte() {
-        return Base64.decode(photoUrl, Base64.DEFAULT);
+    public Photo(byte[] photoBytes) {
+        this.photoBytes = photoBytes;
     }
 
-    public void setImageByte(byte[] photoBytes) {
-        photoUrl = Base64.encodeToString(photoBytes, Base64.DEFAULT);
-    }
-
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -60,20 +48,12 @@ public class Photo {
         this.id = id;
     }
 
-    public Uri getPhotoUris() {
-        return photoUris;
+    public byte[] getPhotoBytes() {
+        return photoBytes;
     }
 
-    public void setPhotoUris(Uri photoUris) {
-        this.photoUris = photoUris;
-    }
-
-    public String getPhotoUrl() {
-        return photoUrl;
-    }
-
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhotoBytes(byte[] photoBytes) {
+        this.photoBytes = photoBytes;
     }
 
     public Integer getIdCommande() {
@@ -82,13 +62,5 @@ public class Photo {
 
     public void setIdCommande(Integer idCommande) {
         this.idCommande = idCommande;
-    }
-
-    public Commande getCommande() {
-        return commande;
-    }
-
-    public void setCommande(Commande commande) {
-        this.commande = commande;
     }
 }

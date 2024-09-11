@@ -58,4 +58,10 @@ dependencies {
     implementation(libs.lombok)
     annotationProcessor(libs.lombok)
 
+    // Gson dependency
+    implementation(libs.gson)
+    //glide image
+    implementation (libs.glide)
+
+
 }

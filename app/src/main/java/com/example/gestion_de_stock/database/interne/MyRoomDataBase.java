@@ -10,9 +10,11 @@ import androidx.room.TypeConverters;
 
 import com.example.gestion_de_stock.database.interne.DAO.ClientDAO;
 import com.example.gestion_de_stock.database.interne.DAO.CommandeDAO;
+import com.example.gestion_de_stock.database.interne.DAO.LigneCommandeDAO;
 import com.example.gestion_de_stock.database.interne.DAO.PhotoDAO;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
 import com.example.gestion_de_stock.database.interne.entity.Client;
+import com.example.gestion_de_stock.database.interne.entity.LigneCommande;
 import com.example.gestion_de_stock.database.interne.entity.Photo;
 import com.example.gestion_de_stock.util.DateConverteur;
 import com.example.gestion_de_stock.util.UriConverter;
@@ -20,15 +22,16 @@ import com.example.gestion_de_stock.util.UriConverter;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Client.class,  Photo.class, Commande.class,
+@Database(entities = {Client.class,  Photo.class, Commande.class, LigneCommande.class
 }, version = 1, exportSchema = false)
 @TypeConverters({UriConverter.class, DateConverteur.class})
 public abstract class MyRoomDataBase extends RoomDatabase {
-    private final static String DATABASE_NAME = "test_1.3";
+    private final static String DATABASE_NAME = "test_1.9";
 
     public abstract ClientDAO clientDAO();
     public abstract CommandeDAO commandeDAO();
     public abstract PhotoDAO photoDAO();
+    public abstract LigneCommandeDAO ligneCommandeDAO();
 
 
     private static volatile MyRoomDataBase INSTANCE; //SINGLETON et volatile 1,2,3,4,5 t4aker exeple thread banque

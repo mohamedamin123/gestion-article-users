@@ -103,17 +103,17 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/buttonAjouter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ajouter"
-            android:layout_marginEnd="16dp"/>
-
-        <Button
             android:id="@+id/buttonAnnuler"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/annuler"/>
+
+        <Button
+            android:id="@+id/buttonAjouter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ajouter"
+            android:layout_marginHorizontal="16dp"/>
 
     </LinearLayout>
 

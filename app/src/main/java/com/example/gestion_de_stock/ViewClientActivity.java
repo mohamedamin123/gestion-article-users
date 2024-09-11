@@ -3,6 +3,7 @@ package com.example.gestion_de_stock;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +17,7 @@ import com.example.gestion_de_stock.database.interne.entity.Client;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelCommande;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelClient;
+import com.example.gestion_de_stock.database.interne.viewModel.ViewModelLigneCommande;
 import com.example.gestion_de_stock.databinding.ActivityViewClientBinding;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
     private List<Commande> data; // Changed to List<Object> to handle multiple types
     private GenericAdapter adapter;
     private ViewModelCommande modelCommande;
+    private ViewModelLigneCommande modelLigneCommande;
+
     private ViewModelClient modelClient;
     int clientId;
     @Override
@@ -39,6 +43,8 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
         // Initialize ViewModels
         modelCommande = new ViewModelProvider(this).get(ViewModelCommande.class);
         modelClient = new ViewModelProvider(this).get(ViewModelClient.class);
+        modelLigneCommande = new ViewModelProvider(this).get(ViewModelLigneCommande.class);
+
 
         // Configure RecyclerView avec un LayoutManager vertical
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -93,41 +99,8 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
     public void onItemClick(Object item) {
         if (item instanceof Commande) {
             Commande commande = (Commande) item;
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Action pour " + commande.getModele());
-            builder.setMessage("Que voulez-vous faire avec ce client ?");
-
-            // Ajouter les boutons à l'alerte
-            builder.setPositiveButton("Ajouter image", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Action pour le bouton "Modifier"
-                    Toast.makeText(ViewClientActivity.this, "ajouter " , Toast.LENGTH_SHORT).show();
+            creeAlert(commande);
                 }
-            });
-
-            builder.setNegativeButton("Supprimer", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Action pour le bouton "Supprimer"
-                    Toast.makeText(ViewClientActivity.this, "Supprimer", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            builder.setNeutralButton("Modifier", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Action pour le bouton "Supprimer"
-                    Toast.makeText(ViewClientActivity.this, "Modifier ", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            // Montrer la boîte de dialogue
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-        }
-
 }
 
 private void getData(int id) {
@@ -148,5 +121,62 @@ private void getData(int id) {
     });
 
 
+
 }
+
+    private void creeAlert(Commande commande) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Action pour " + commande.getModele());
+        builder.setMessage("Que voulez-vous faire avec cette commande ?");
+
+        // Ajouter image action
+        builder.setPositiveButton("Ajouter image", (dialog, which) -> {
+            Intent intent = new Intent(ViewClientActivity.this, ImageCommandeActivity.class);
+            intent.putExtra("clientId",clientId);
+            intent.putExtra("idCommande",commande.getIdCommande());
+            startActivity(intent);
+            // Implement logic for adding an image
+        });
+
+        // Modifier action
+        builder.setNeutralButton("Modifier", (dialog, which) -> {
+            Intent intent = new Intent(ViewClientActivity.this, AjouterModeleActivity.class);
+            intent.putExtra("clientId", clientId);
+            intent.putExtra("commande", (Parcelable) commande);
+            startActivity(intent);
+
+        });
+
+        // Supprimer action
+        builder.setNegativeButton("Supprimer", (dialog, which) -> {
+            // Confirmation dialog for deletion
+            new AlertDialog.Builder(ViewClientActivity.this)
+                    .setTitle("Confirmer suppression")
+                    .setMessage("Voulez-vous vraiment supprimer cette commande ?")
+                    .setPositiveButton("Oui", (confirmDialog, confirmWhich) -> {
+                        // Logic to delete the item
+                        try {
+                            modelLigneCommande.deleteLigneCommandeByIdCommande(commande.getIdCommande());
+                            modelCommande.deleteCommandeById(commande.getIdCommande());
+                            data.clear();
+
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(ViewClientActivity.this, "Commande supprimée", Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            Toast.makeText(ViewClientActivity.this, "Erreur lors de la suppression", Toast.LENGTH_SHORT).show();
+                            e.printStackTrace(); // Log the error for debugging
+                        }
+                        // Implement logic for deletion
+                    })
+                    .setNegativeButton("Non", (confirmDialog, confirmWhich) -> {
+                        // Logic for cancelling deletion
+                        confirmDialog.dismiss();
+                    })
+                    .show();
+        });
+
+        // Show the dialog
+        builder.create().show();
+    }
+
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/sdp_16"
+    tools:context=".ImageCommandeActivity">
+
+    <TextView
+        android:id="@+id/imageCommande"
+        style="@style/style_tv_sous_title_post"
+        android:textColor="@color/gray"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:layout_gravity="center"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:text="@string/les_images" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycleImageCommande"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="8"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/buttonAnnuler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/annuler"/>
+
+        <Button
+            android:id="@+id/ajouterPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ajouter"
+            android:layout_marginHorizontal="16dp"/>
+    </LinearLayout>
+
+</LinearLayout>
