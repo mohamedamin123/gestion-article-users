@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 }, version = 1, exportSchema = false)
 @TypeConverters({UriConverter.class, DateConverteur.class})
 public abstract class MyRoomDataBase extends RoomDatabase {
-    private final static String DATABASE_NAME = "test_2.5";
+    private final static String DATABASE_NAME = "test_2.6";
 
     public abstract ClientDAO clientDAO();
     public abstract CommandeDAO commandeDAO();

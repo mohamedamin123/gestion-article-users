@@ -49,6 +49,16 @@ public class RepositoryCommande {
         });
     }
 
+    public void deleteCommandeByIdClient(Integer id)
+    {
+        MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                CommandeDAO.deleteCommandeByIdClient(id);
+            }
+        });
+    }
+
     public void deleteCommandeById(Integer id)
     {
         MyRoomDataBase.databaseWriteExecutor.execute(new Runnable() {

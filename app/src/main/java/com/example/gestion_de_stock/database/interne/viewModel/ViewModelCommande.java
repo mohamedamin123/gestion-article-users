@@ -30,10 +30,16 @@ public class ViewModelCommande extends AndroidViewModel {
        repositiry.deleteCommande(commandes);
     }
 
+    public void deleteCommandeByIdClient(Integer id)
+    {
+       repositiry.deleteCommandeByIdClient(id);
+    }
+
     public void deleteCommandeById(Integer id)
     {
-       repositiry.deleteCommandeById(id);
+        repositiry.deleteCommandeById(id);
     }
+
 
     public LiveData<Commande> findCommandeById(Integer id)
     {

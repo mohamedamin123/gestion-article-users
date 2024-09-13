@@ -26,6 +26,9 @@ public interface CommandeDAO {
     @Query("delete from Commande where Commande_id=:id")
     void deleteCommandeById(Integer id);
 
+    @Query("delete from Commande where idClient=:id")
+    void deleteCommandeByIdClient(Integer id);
+
     @Query("select * from Commande where Commande_id=:id")
     LiveData<Commande> findCommandeById(Integer id);
 

@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
                 entity = Client.class,
                 parentColumns = "idClient",
                 childColumns = "idClient",
-                onDelete = ForeignKey.NO_ACTION // Change to NO_ACTION or RESTRICT
+                onDelete = ForeignKey.CASCADE // Use CASCADE to delete dependent Commandes
         )
 )
 public class Commande implements Parcelable {

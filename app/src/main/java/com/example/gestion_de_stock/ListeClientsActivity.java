@@ -19,6 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.gestion_de_stock.adapter.CLientAdapter;
 import com.example.gestion_de_stock.database.interne.entity.Client;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelClient;
+import com.example.gestion_de_stock.database.interne.viewModel.ViewModelCommande;
+import com.example.gestion_de_stock.database.interne.viewModel.ViewModelLigneCommande;
+import com.example.gestion_de_stock.database.interne.viewModel.ViewModelPhoto;
 import com.example.gestion_de_stock.databinding.ActivityListeClientsBinding;
 
 import java.util.ArrayList;
@@ -32,6 +35,10 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
     private List<Client> clients;
     private List<Client> filteredClients;
     private ViewModelClient modelClient;
+    private ViewModelPhoto viewModelPhoto;
+    private ViewModelCommande viewModelCommande;
+    private ViewModelLigneCommande viewModelLigneCommande;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,10 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
         setContentView(binding.getRoot());
 
         modelClient = new ViewModelProvider(this).get(ViewModelClient.class);
+        viewModelPhoto = new ViewModelProvider(this).get(ViewModelPhoto.class);
+        viewModelCommande = new ViewModelProvider(this).get(ViewModelCommande.class);
+        viewModelLigneCommande = new ViewModelProvider(this).get(ViewModelLigneCommande.class);
+
 
         // Initialiser les données
         clients = new ArrayList<>();
@@ -114,6 +125,7 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
             clients.remove(clientToRemove);
             filteredClients.remove(clientToRemove);
             adapter.updateList(filteredClients);
+            viewModelCommande.deleteCommandeByIdClient(id);
             modelClient.deleteClientById(id);
             Toast.makeText(this, getResources().getText(R.string.client_supprimer), Toast.LENGTH_SHORT).show();
         } else {

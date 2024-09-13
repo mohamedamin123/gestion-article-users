@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
                 entity = Commande.class,
                 parentColumns = "commande_id",
                 childColumns = "commande_id",
-                onDelete = ForeignKey.CASCADE))
+                onDelete = ForeignKey.CASCADE ))// Use CASCADE to delete related Commandes when a Client is deleted
 public class Photo {
 
     @PrimaryKey(autoGenerate = true)
