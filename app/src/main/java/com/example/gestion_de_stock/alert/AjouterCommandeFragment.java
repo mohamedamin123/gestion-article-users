@@ -219,7 +219,7 @@ public class AjouterCommandeFragment extends DialogFragment implements ClientCom
     @Override
     public void supprimer(LigneCommande item) {
         ligneCommandes.remove(item);
-        viewModel.deleteLigneCommandeById(item.getIdLigneCommande());
+        //viewModel.deleteLigneCommandeById(item.getIdLigneCommande());
         adapter.notifyDataSetChanged();
         onQuantityChanged();
 

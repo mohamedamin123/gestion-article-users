@@ -53,4 +53,8 @@ public class ViewModelPhoto extends AndroidViewModel {
         return repositiry.findAllPhotosByCommande(id);
     }
 
+    public LiveData<Photo> findPhtoById(Integer id) {
+        return repositiry.findPhtoById(id);
+    }
+
 }

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -27,6 +28,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.gestion_de_stock.adapter.PhotoCommandeAdapter;
+import com.example.gestion_de_stock.alert.AjouterCommandeFragment;
+import com.example.gestion_de_stock.alert.VisualitationImageFragment;
 import com.example.gestion_de_stock.database.interne.entity.Photo;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelPhoto;
 import com.example.gestion_de_stock.databinding.ActivityImageCommandeBinding;
@@ -44,6 +47,7 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
     private ViewModelPhoto viewModelPhoto;
     private Integer idCommande, idClient;
     ActivityResultLauncher<String> arl;
+    private VisualitationImageFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,19 +142,35 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
     @Override
     public void manipule(Photo photo) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Supprimer photo" );
-        builder.setMessage("Voulez vous supprimer cette image?");
-         builder.setPositiveButton("Oui", (confirmDialog, confirmWhich) -> {
+        builder.setTitle("Options de la photo");
+        builder.setMessage("Que voulez-vous faire avec cette image?");
 
-             viewModelPhoto.deletePhotoByID(photo.getId());
-             adapter.notifyDataSetChanged();
-        })
-                 .setNegativeButton("Non", (confirmDialog, confirmWhich) -> {
-                    // Logic for cancelling deletion
-                    confirmDialog.dismiss();
-                })
-                .show();
+        // Set up the "Supprimer" button
+        builder.setPositiveButton("Supprimer", (dialog, which) -> {
+            AlertDialog.Builder confirmDialog = new AlertDialog.Builder(this);
+            confirmDialog.setTitle("Supprimer photo");
+            confirmDialog.setMessage("Voulez-vous supprimer cette image?");
+
+            confirmDialog.setPositiveButton("Oui", (confirmDialog1, confirmWhich) -> {
+                        viewModelPhoto.deletePhotoByID(photo.getId());
+                        adapter.notifyDataSetChanged();
+                    })
+                    .setNegativeButton("Non", (confirmDialog1, confirmWhich) -> {
+                        confirmDialog1.dismiss();
+                    }).show();
+        });
+
+        // Set up the "Afficher" button
+        builder.setNegativeButton("Afficher", (dialog, which) -> {
+            Toast.makeText(this, "Image affichée", Toast.LENGTH_SHORT).show();
+            fragment =  VisualitationImageFragment.newInstance(photo.getId());
+            fragment.show(getSupportFragmentManager(), "VisualitationImageFragment");
+        });
+
+        // Show the dialog
+        builder.show();
     }
+
 
     @Override
     public void manipuleDouble(Photo photo) {
