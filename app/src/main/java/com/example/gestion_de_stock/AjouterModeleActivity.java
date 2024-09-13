@@ -80,6 +80,7 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
             saveAndClose=false;
             PreferencesManager.clearData();
             startActivity(backIntent);
+            finish();
         });
 
         // Setup click listener for "Enregistrer" button
@@ -229,6 +230,7 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
                     Intent backIntent = new Intent(AjouterModeleActivity.this, ViewClientActivity.class);
                     backIntent.putExtra("clientId", clientId);
                     startActivity(backIntent);
+                    finish();
                 } else {
                     Toast.makeText(AjouterModeleActivity.this, getResources().getText(R.string.failed_commande), Toast.LENGTH_SHORT).show();
                 }

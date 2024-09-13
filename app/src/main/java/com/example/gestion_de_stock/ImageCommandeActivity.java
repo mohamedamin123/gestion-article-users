@@ -115,6 +115,7 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
             Intent intent1 = new Intent(ImageCommandeActivity.this, ViewClientActivity.class);
             intent1.putExtra("clientId", idClient);
             startActivity(intent1);
+            finish();
         });
     }
 

@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         binding.client.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 startActivity(new Intent(MainActivity.this, ListeClientsActivity.class));            }
         });
 

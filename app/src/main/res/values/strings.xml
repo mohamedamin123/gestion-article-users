@@ -47,4 +47,5 @@
     <string name="no_commande">Aucune commande enregistrée trouvée</string>
     <string name="meme_commande">Certaines commandes ont la même couleur. Veuillez les corriger</string>
     <string name="fermer">Fermer</string>
+    <string name="retour">Retour</string>
 </resources>

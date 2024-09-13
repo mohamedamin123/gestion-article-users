@@ -108,7 +108,6 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CALL_PHONE}, REQUEST_CALL_PHONE);
             return;
         }
-
         startActivity(callIntent);
     }
 
