@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
                 entity = Commande.class,
                 parentColumns = "commande_id",
                 childColumns = "commande_id",
-                onDelete = ForeignKey.CASCADE
+                onDelete = ForeignKey.NO_ACTION // Change to NO_ACTION or RESTRICT
         )
 )
 public class LigneCommande implements Parcelable {

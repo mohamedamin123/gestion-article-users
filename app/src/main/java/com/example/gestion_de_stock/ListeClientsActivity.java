@@ -115,9 +115,9 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
             filteredClients.remove(clientToRemove);
             adapter.updateList(filteredClients);
             modelClient.deleteClientById(id);
-            Toast.makeText(this, "Utilisateur supprimé avec ID: " + id, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.client_supprimer), Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Utilisateur non trouvé pour la suppression", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.error_supprimer_user), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -140,7 +140,7 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
             intent.putExtra("email", clientToEdit.getEmail());
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Utilisateur non trouvé pour l'édition", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.client_non_trouve), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -175,7 +175,7 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
                 // Permission granted, can now make the call
             } else {
                 // Permission denied
-                Toast.makeText(this, "Permission denied to make calls", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getText(R.string.permission_denied_call), Toast.LENGTH_SHORT).show();
             }
         }
     }

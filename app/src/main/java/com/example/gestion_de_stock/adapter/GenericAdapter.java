@@ -1,5 +1,6 @@
 package com.example.gestion_de_stock.adapter;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -46,10 +47,28 @@ public class GenericAdapter extends RecyclerView.Adapter<GenericAdapter.GenericV
         holder.binding.column4Data.setText(item.getTotal() != 0 ? String.valueOf(item.getTotal()) : "");
         holder.binding.column5Data.setText(item.getAvance() != 0 ? String.valueOf(item.getAvance()) : "");
         holder.binding.column6Data.setText(item.getReste() != 0 ? String.valueOf(item.getReste()) : "0");
-        if(item.getReste() == 0) {
-            holder.itemView.setBackgroundColor(holder.itemView.getResources().getColor(R.color.accent_green));
+        if (position % 2 == 0) {
+            // For even rows, set one color
+            holder.itemView.setBackgroundColor(Color.parseColor("#f5f5f5"));
         } else {
-            holder.itemView.setBackgroundColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            // For odd rows, set another color
+            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        if(item.getReste() == 0) {
+            holder.binding.column1Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+            holder.binding.column2Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+            holder.binding.column3Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+            holder.binding.column4Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+            holder.binding.column5Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+            holder.binding.column6Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+
+        } else {
+            holder.binding.column1Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            holder.binding.column2Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            holder.binding.column3Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            holder.binding.column4Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            holder.binding.column5Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            holder.binding.column6Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
         }
 
 

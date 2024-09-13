@@ -58,6 +58,7 @@ public class AjouterClientActivity extends AppCompatActivity {
                     .prenom(prenom)
                     .email(email)
                     .telephone(tel)
+                    .statut(true)
                     .build();
 
             if(userId==-1) {
@@ -68,7 +69,7 @@ public class AjouterClientActivity extends AppCompatActivity {
             }
 
             saveData();
-            Toast.makeText(this, "Modifications sauvegardées", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.save_succesuful), Toast.LENGTH_SHORT).show();
             finish(); // Revenir à la liste des clients
             startActivity(new Intent(AjouterClientActivity.this, ListeClientsActivity.class));
         });

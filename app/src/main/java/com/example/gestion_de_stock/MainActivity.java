@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         binding.medele.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, getResources().getText(R.string.button_modele), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getResources().getText(R.string.toast_develement), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/modele"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
@@ -22,9 +23,12 @@
     <TextView
         android:id="@+id/column2Data"
         android:layout_width="0dp"
+        android:textStyle="bold"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/prix"
+        android:textSize="16sp"
+
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
@@ -33,16 +37,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/commande"
-        android:gravity="center"
-        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+        android:textSize="16sp"
 
-    <TextView
-        android:id="@+id/column4Data"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/total"
+        android:text="@string/commande"
+        android:textStyle="bold"
         android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
@@ -53,6 +51,19 @@
         android:layout_weight="1"
         android:text="@string/avance"
         android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column4Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/total"
+        android:gravity="center"
         android:layout_marginEnd="8dp"/> <!-- Marge entre les colonnes -->
 
     <TextView
@@ -61,6 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/reste_prix"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:gravity="center"/>
 
 </LinearLayout>

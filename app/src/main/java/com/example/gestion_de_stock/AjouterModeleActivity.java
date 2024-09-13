@@ -1,5 +1,7 @@
 package com.example.gestion_de_stock;
 
+import static com.example.gestion_de_stock.alert.AjouterCommandeFragment.saveAndClose;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,9 +20,11 @@ import com.example.gestion_de_stock.database.interne.entity.LigneCommande;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelCommande;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelClient;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelLigneCommande;
+import com.example.gestion_de_stock.database.shared.PreferencesManager;
 import com.example.gestion_de_stock.databinding.ActivityAjouterModeleBinding;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AjouterModeleActivity extends AppCompatActivity implements AjouterCommandeFragment.OnDataPass {
@@ -32,6 +36,8 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
     private int clientId;
     private Commande commandeData;
     private List<LigneCommande> ligneCommandes = new ArrayList<>();
+    Boolean e=false;
+    Intent mainIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,43 +45,22 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         EdgeToEdge.enable(this);
         bindingAjout = ActivityAjouterModeleBinding.inflate(getLayoutInflater());
         setContentView(bindingAjout.getRoot());
+        PreferencesManager.init(AjouterModeleActivity.this);
+         mainIntent = new Intent(AjouterModeleActivity.this, MainActivity.class);
 
-        // Initialize ViewModels
-        viewModelCommande = new ViewModelProvider(this).get(ViewModelCommande.class);
-        viewModelClient = new ViewModelProvider(this).get(ViewModelClient.class);
-        viewModelLigneCommande = new ViewModelProvider(this).get(ViewModelLigneCommande.class);
+        initViewModele();
+        getDataIntent();
+        initDialog();
+        if(!ligneCommandes.isEmpty()) {
 
-        // Retrieve clientId and Commande data from Intent
-        Intent intent = getIntent();
-        clientId = intent.getIntExtra("clientId", -1);
-        commandeData = getIntent().getParcelableExtra("commande");
-
-        // Populate fields if commandeData is not null
-        if (commandeData != null) {
-            bindingAjout.editModele.setText(commandeData.getModele());
-            bindingAjout.editPrix.setText(String.valueOf(commandeData.getPrix()));
-            bindingAjout.editCommande.setText(String.valueOf(commandeData.getQte()));
-            bindingAjout.editAvance.setText(String.valueOf(commandeData.getAvance()));
-            bindingAjout.editTotal.setText(String.valueOf(commandeData.getTotal()));
-            bindingAjout.editReste.setText(String.valueOf(commandeData.getReste()));
-
-            viewModelLigneCommande.findLigneCommandeByIdCommande(commandeData.getIdCommande()).observe(this, new Observer<List<LigneCommande>>() {
-                @Override
-                public void onChanged(List<LigneCommande> ls) {
-
-                    ligneCommandes.clear();
-                    for (LigneCommande l:ls) {
-                        l.setIdLigneCommande(null);
-                    }
-                    ligneCommandes.addAll(ls);
-                    AjouterModeleActivity.this.ligneCommandes = ls;
-                    updateTotal();
+            for (LigneCommande l: ligneCommandes) {
+                if(l.getCommandeId()!=null){
+                    viewModelLigneCommande.removeDuplicatesAfterInsert(l);
                 }
-            });
 
+            }
         }
 
-        // Setup click listener for EditText to open dialog
         bindingAjout.editCommande.setFocusable(false);
         bindingAjout.editCommande.setOnClickListener(v -> {
             AjouterCommandeFragment dialog;
@@ -92,6 +77,8 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         bindingAjout.btnRetour.setOnClickListener(v -> {
             Intent backIntent = new Intent(AjouterModeleActivity.this, ViewClientActivity.class);
             backIntent.putExtra("clientId", clientId);
+            saveAndClose=false;
+            PreferencesManager.clearData();
             startActivity(backIntent);
         });
 
@@ -106,17 +93,67 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
 
     }
 
+    private void initDialog() {
+        if (commandeData != null) {
+            populateCommandeDataFields();
+            if (!e) {
+                viewModelLigneCommande.findLigneCommandeByIdCommande(commandeData.getIdCommande()).observe(this, this::processLigneCommandes);
+            }
+        } else {
+            List<LigneCommande> savedLigneCommandes = PreferencesManager.getItemCommandes();
+            if (savedLigneCommandes != null && !savedLigneCommandes.isEmpty()) {
+                processLigneCommandes(savedLigneCommandes);
+            } else {
+                Log.d("no save","No saved commands found");
+            }
+        }
+    }
+
+    private void populateCommandeDataFields() {
+        bindingAjout.editModele.setText(commandeData.getModele());
+        bindingAjout.editPrix.setText(String.valueOf(commandeData.getPrix()));
+        bindingAjout.editCommande.setText(String.valueOf(commandeData.getQte()));
+        bindingAjout.editAvance.setText(String.valueOf(commandeData.getAvance()));
+        bindingAjout.editTotal.setText(String.valueOf(commandeData.getTotal()));
+        bindingAjout.editReste.setText(String.valueOf(commandeData.getReste()));
+    }
+
+    private void processLigneCommandes(List<LigneCommande> ls) {
+//
+        for (LigneCommande l : ls) {
+            l.setIdLigneCommande(null);
+            l.setCommandeId(commandeData != null ? commandeData.getIdCommande() : null);
+        }
+        ligneCommandes.clear();
+        ligneCommandes.addAll(ls);
+        updateTotal();
+    }
+
+    private void getDataIntent() {
+        // Retrieve clientId and Commande data from Intent
+        Intent intent = getIntent();
+        clientId = intent.getIntExtra("clientId", -1);
+        commandeData = getIntent().getParcelableExtra("commande");
+    }
+
+    private void initViewModele() {
+        // Initialize ViewModels
+        viewModelCommande = new ViewModelProvider(this).get(ViewModelCommande.class);
+        viewModelClient = new ViewModelProvider(this).get(ViewModelClient.class);
+        viewModelLigneCommande = new ViewModelProvider(this).get(ViewModelLigneCommande.class);
+    }
+
     private void saveData() {
         // Validate clientId
         if (clientId == -1) {
-            Toast.makeText(this, "Invalid client ID", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.client_non_trouve), Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Retrieve data from fields
         String articleName = bindingAjout.editModele.getText().toString();
         if (articleName.isEmpty()) {
-            Toast.makeText(this, "Please enter a model name", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.model_name), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -137,68 +174,67 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
             commande.setTotal(total);
             commande.setClientId(clientId);
 
-            // Insert or update Commande
-            if (commandeData == null) {
+            // Check if commandeData is null
+            if (commandeData != null) {
+                // Update the existing Commande
+                commande.setIdCommande(commandeData.getIdCommande()); // Ensure commandeData is not null
+                viewModelCommande.updateCommande(commande);
+                saveLigneCommande(commande.getIdCommande());
+
+                // Handle LigneCommande after updating Commande
+
+            } else {
+                // Insert new Commande
                 viewModelCommande.insertCommande(commande).observe(this, new Observer<Long[]>() {
                     @Override
                     public void onChanged(Long[] insertedCommandeIds) {
                         if (insertedCommandeIds != null && insertedCommandeIds.length > 0) {
                             Long insertedCommandeId = insertedCommandeIds[0];
+                            Log.d("mlk", "Inserted Commande ID: " + insertedCommandeId);
+                            for (LigneCommande lc : ligneCommandes) {
+                                lc.setCommandeId(insertedCommandeId.intValue());
+                            }
                             saveLigneCommande(insertedCommandeId.intValue());
                         } else {
-                            Toast.makeText(AjouterModeleActivity.this, "Failed to insert Commande", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AjouterModeleActivity.this, getResources().getText(R.string.failed_commande), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-            } else {
-                commande.setIdCommande(commandeData.getIdCommande());
-                viewModelCommande.updateCommande(commande);
-
-                viewModelLigneCommande.deleteLigneCommandeByIdCommande(commandeData.getIdCommande());
-                saveLigneCommande(commande.getIdCommande());
             }
-
-            // Clear fields after saving
-            //clearFields();
+            saveAndClose = false;
 
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Invalid input. Please check your data.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.donnee_incorrect), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void saveLigneCommande(int id) {
         if (ligneCommandes.isEmpty()) {
-            Toast.makeText(this, "No LigneCommandes to save", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getResources().getText(R.string.entrer_quantite), Toast.LENGTH_SHORT).show();
             return;
         }
-        for (LigneCommande ligne : ligneCommandes) {
-            ligne.setCommandeId(id);
 
+        if (saveAndClose) {
+            List<LigneCommande> savedLigneCommandes = PreferencesManager.getItemCommandes();
+            if (!savedLigneCommandes.isEmpty()) {
+                ligneCommandes.clear();
+                ligneCommandes.addAll(savedLigneCommandes);
+            }
         }
 
-        viewModelLigneCommande.insertLigneCommandes(ligneCommandes, success -> {
+        viewModelLigneCommande.insertOrUpdateLigneCommandes(success -> {
             runOnUiThread(() -> {
                 if (success) {
-                    Toast.makeText(AjouterModeleActivity.this, "LigneCommandes saved successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AjouterModeleActivity.this,getResources().getText(R.string.save_succesuful), Toast.LENGTH_SHORT).show();
                     Intent backIntent = new Intent(AjouterModeleActivity.this, ViewClientActivity.class);
                     backIntent.putExtra("clientId", clientId);
                     startActivity(backIntent);
                 } else {
-                    Toast.makeText(AjouterModeleActivity.this, "Failed to save LigneCommandes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AjouterModeleActivity.this, getResources().getText(R.string.failed_commande), Toast.LENGTH_SHORT).show();
                 }
             });
-        });
+        }, ligneCommandes);
     }
-
-    private void clearFields() {
-        bindingAjout.editModele.setText("");
-        bindingAjout.editPrix.setText("");
-        bindingAjout.editCommande.setText("");
-        bindingAjout.editAvance.setText("");
-        bindingAjout.editReste.setText("");
-        bindingAjout.editTotal.setText("");
-    }
-
     @Override
     public void onDataPass(float data) {
         bindingAjout.editCommande.setText(String.valueOf(data));
@@ -269,5 +305,11 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         } catch (NumberFormatException e) {
             bindingAjout.editReste.setText("");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

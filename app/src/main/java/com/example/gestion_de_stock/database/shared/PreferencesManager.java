@@ -20,11 +20,13 @@ public class PreferencesManager {
 
     // Initialize SharedPreferences
     public static void init(Context context) {
-        sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        if (sharedPreferences == null) {
+            sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        }
     }
 
     // Save item commandes to SharedPreferences
-    public static void saveItemCommandes(Context context, List<LigneCommande> ligneCommandes) {
+    public static void saveItemCommandes(List<LigneCommande> ligneCommandes) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String json = gson.toJson(ligneCommandes);
         editor.putString(ITEMS_KEY, json);
@@ -32,14 +34,14 @@ public class PreferencesManager {
     }
 
     // Clear specific data from SharedPreferences
-    public static void clearData(Context context) {
+    public static void clearData() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove(ITEMS_KEY); // Remove specific key
         editor.apply(); // Save changes
     }
 
     // Get item commandes from SharedPreferences
-    public static List<LigneCommande> getItemCommandes(Context context) {
+    public static List<LigneCommande> getItemCommandes() {
         String json = sharedPreferences.getString(ITEMS_KEY, "[]");
         Type type = new TypeToken<ArrayList<LigneCommande>>(){}.getType();
         return gson.fromJson(json, type);

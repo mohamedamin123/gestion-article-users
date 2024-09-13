@@ -22,4 +22,13 @@
         android:hint="Quantity"
         android:inputType="number"
         android:minHeight="48dp" />
+
+    <ImageView
+        android:id="@+id/btnMinus"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/delete"
+        android:minHeight="48dp" />
 </LinearLayout>

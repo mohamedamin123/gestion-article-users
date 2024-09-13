@@ -102,8 +102,6 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
         // Bouton pour ajouter plusieurs photos
         binding.ajouterPhoto.setOnClickListener(view -> {
             // Vérification si le clic est bien enregistré
-            Toast.makeText(this, "Ajouter photo cliqué", Toast.LENGTH_SHORT).show();
-
             // Demande directe de permission (on force la demande)
             requestStoragePermission();
         });
@@ -157,7 +155,6 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
     @Override
     public void manipuleDouble(Photo photo) {
         // Find the ZoomImageView in your layout
-        Toast.makeText(this, "double click", Toast.LENGTH_SHORT).show();
     }
 
 

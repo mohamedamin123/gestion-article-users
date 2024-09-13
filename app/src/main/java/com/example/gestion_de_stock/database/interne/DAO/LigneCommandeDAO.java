@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Dao
 public interface LigneCommandeDAO {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertLigneCommandes(LigneCommande... ligneCommandes);
 
     @Update
@@ -41,4 +42,7 @@ public interface LigneCommandeDAO {
 
     @Query("SELECT * FROM ligne_commande WHERE commande_id = :commande_id")
     LiveData<List<LigneCommande>> findAllLigneCommandeByCommandeId(int commande_id);
+
+    @Query("SELECT * FROM ligne_commande WHERE commande_id = :commande_id and qte=:qte and color =:color")
+    List<LigneCommande> findLigneCommandesByColorAndQteAndCommandeId(String color,float qte,int commande_id);
 }

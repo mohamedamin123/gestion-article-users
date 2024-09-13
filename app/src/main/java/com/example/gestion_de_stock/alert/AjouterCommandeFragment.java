@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -15,6 +16,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.gestion_de_stock.AjouterModeleActivity;
+import com.example.gestion_de_stock.R;
 import com.example.gestion_de_stock.adapter.ClientCommandeTabAdapter;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
 import com.example.gestion_de_stock.database.interne.entity.LigneCommande;
@@ -23,9 +26,14 @@ import com.example.gestion_de_stock.database.shared.PreferencesManager;
 import com.example.gestion_de_stock.databinding.FragmentAjouterCommandeBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class AjouterCommandeFragment extends DialogFragment {
+public class AjouterCommandeFragment extends DialogFragment implements ClientCommandeTabAdapter.OnQuantityChangeListener {
 
     private static final String ARG_COMMANDE_ID = "commande_id";
     private FragmentAjouterCommandeBinding binding;
@@ -34,6 +42,7 @@ public class AjouterCommandeFragment extends DialogFragment {
     private OnDataPass dataPasser;
     private Integer commandeId;
     private ViewModelLigneCommande viewModel;
+    public static Boolean saveAndClose =false;
 
     public AjouterCommandeFragment() {
         // Required empty public constructor
@@ -58,46 +67,62 @@ public class AjouterCommandeFragment extends DialogFragment {
         binding = FragmentAjouterCommandeBinding.inflate(inflater, container, false);
 
         PreferencesManager.init(getContext());
-
-        if (commandeId != null && commandeId != 0) {
-
-            viewModel.findAllLigneCommandeByCommandeId(commandeId).observe(getViewLifecycleOwner(), new Observer<List<LigneCommande>>() {
-                @Override
-                public void onChanged(List<LigneCommande> ligneCommandesFromDb) {
-                    if (ligneCommandesFromDb != null) {
-                        ligneCommandes.clear();
-                        for (LigneCommande lc : ligneCommandesFromDb) {
-                            lc.setIdLigneCommande(null);
-
-                        }
-                        ligneCommandes.addAll(ligneCommandesFromDb);
-                    } else {
-                        // Handle the case where no data is returned
-                        ligneCommandes.clear();
-                        ligneCommandes.add(new LigneCommande("jaune", 0, commandeId));
-                        ligneCommandes.add(new LigneCommande("bleu", 0, commandeId));
-                        ligneCommandes.add(new LigneCommande("rouge", 0, commandeId));
-                    }
-                    adapter.notifyDataSetChanged();
-                    onQuantityChanged();
-                }
-            });
-        } else {
-            // Initialize with default values if commandeId is 0
-            ligneCommandes.add(new LigneCommande("jaune", 0, commandeId));
-            ligneCommandes.add(new LigneCommande("bleu", 0, commandeId));
-            ligneCommandes.add(new LigneCommande("rouge", 0, commandeId));
-        }
-
-        adapter = new ClientCommandeTabAdapter(ligneCommandes, this::onQuantityChanged);
+        adapter = new ClientCommandeTabAdapter(ligneCommandes,this);
         binding.recyclerClient.setAdapter(adapter);
         binding.recyclerClient.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+        binding.editTotal.setFocusable(false);
+
+
+        if(saveAndClose) {
+            List<LigneCommande> savedLigneCommandes = PreferencesManager.getItemCommandes();
+
+            // Check if there are any saved LigneCommandes
+            if (savedLigneCommandes != null && !savedLigneCommandes.isEmpty()) {
+
+                ligneCommandes.clear();
+                ligneCommandes.addAll(savedLigneCommandes);
+                onQuantityChanged();
+            } else {
+                // Handle case where no data is available in SharedPreferences
+                // You can show a message or handle it as needed
+                Toast.makeText(getContext(), getResources().getText(R.string.no_commande), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (commandeId != null && commandeId != 0) {
+
+                viewModel.findAllLigneCommandeByCommandeId(commandeId).observe(getViewLifecycleOwner(), new Observer<List<LigneCommande>>() {
+                    @Override
+                    public void onChanged(List<LigneCommande> ligneCommandesFromDb) {
+                        Log.d("fedet",ligneCommandesFromDb.toString());
+
+                        if (ligneCommandesFromDb != null) {
+                            ligneCommandes.clear();
+                            ligneCommandes.addAll(ligneCommandesFromDb);
+                        }
+                        removeDuplicatesByColor(ligneCommandes);
+
+                        adapter.notifyDataSetChanged();
+                        onQuantityChanged();
+                    }
+                });
+            } else {
+                // Initialize with default values if commandeId is 0
+                ligneCommandes.add(new LigneCommande("jaune", 0, commandeId));
+                ligneCommandes.add(new LigneCommande("bleu", 0, commandeId));
+                ligneCommandes.add(new LigneCommande("rouge", 0, commandeId));
+            }
+        }
+
+
+
+
 
         binding.btnAddRow.setOnClickListener(v -> addNewItem());
 
         binding.btnAnnuler.setOnClickListener(v -> {
             // Réinitialiser la liste des commandes
-            adapter.notifyDataSetChanged(); // Informer l'adaptateur de la mise à jour
             dismiss();
         });
 
@@ -113,21 +138,43 @@ public class AjouterCommandeFragment extends DialogFragment {
     }
 
     private void saveAndClose() {
-        PreferencesManager.saveItemCommandes(getContext(), ligneCommandes);
+        // Check for duplicates based on color
+        Set<String> colorSet = new HashSet<>();
+        boolean hasDuplicateColors = false;
+
+        for (LigneCommande item : ligneCommandes) {
+            if (!colorSet.add(item.getColor())) {
+                hasDuplicateColors = true;
+                break;
+            }
+        }
+
+        // If there are duplicate colors, show a Toast and do not close
+        if (hasDuplicateColors) {
+            Toast.makeText(getContext(), getResources().getText(R.string.meme_commande), Toast.LENGTH_LONG).show();
+            return; // Exit the method to prevent closing
+        }
+
+        // Save the LigneCommandes if there are no duplicates
+        PreferencesManager.saveItemCommandes(ligneCommandes);
         float total = 0;
         for (LigneCommande item : ligneCommandes) {
             total += item.getQte();
         }
 
+        // Pass the data back
         if (dataPasser != null) {
             dataPasser.onDataPass(total);
             dataPasser.onSaveLigneCommande(ligneCommandes);
         }
+
+        // Close the dialog and set the save flag to true
         dismiss();
+        saveAndClose = true;
     }
 
     private void clearData() {
-        PreferencesManager.clearData(getContext());
+        PreferencesManager.clearData();
     }
 
     public interface OnDataPass {
@@ -159,8 +206,8 @@ public class AjouterCommandeFragment extends DialogFragment {
         super.onDestroyView();
         binding = null;
     }
-
-    private void onQuantityChanged() {
+    @Override
+    public void onQuantityChanged() {
         int total = 0;
         for (LigneCommande item : ligneCommandes) {
             total += item.getQte();
@@ -169,4 +216,30 @@ public class AjouterCommandeFragment extends DialogFragment {
             binding.editTotal.setText(String.valueOf(total));
         }
     }
+    @Override
+    public void supprimer(LigneCommande item) {
+        ligneCommandes.remove(item);
+        viewModel.deleteLigneCommandeById(item.getIdLigneCommande());
+        adapter.notifyDataSetChanged();
+        onQuantityChanged();
+
+    }
+    public void removeDuplicatesByColor(List<LigneCommande> ligneCommandes) {
+        // Use a Map to store unique LigneCommandes based on color
+        Map<String, LigneCommande> uniqueLigneCommandes = new HashMap<>();
+
+        // Loop through the list and add unique colors to the map
+        for (LigneCommande item : ligneCommandes) {
+            String color = item.getColor();
+            if (!uniqueLigneCommandes.containsKey(color)) {
+                uniqueLigneCommandes.put(color, item);
+            }
+        }
+
+        // Clear the original list and add only the unique items back
+        ligneCommandes.clear();
+        ligneCommandes.addAll(uniqueLigneCommandes.values());
+        adapter.notifyDataSetChanged();
+    }
+
 }

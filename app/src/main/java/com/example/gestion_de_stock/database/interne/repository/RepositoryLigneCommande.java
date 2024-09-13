@@ -47,6 +47,11 @@ public class RepositoryLigneCommande {
         return  ligneCommandeDAO.findAllLigneCommande();
     }
 
+    public List<LigneCommande> findLigneCommandesByColorAndQteAndCommandeId(String color,float qte,int commande_id)
+    {
+        return  ligneCommandeDAO.findLigneCommandesByColorAndQteAndCommandeId(color,qte,commande_id);
+    }
+
 
     public LiveData<List<LigneCommande>> findLigneCommandeByIdCommande(Integer id) {
         return ligneCommandeDAO.findLigneCommandeByIdCommande(id);

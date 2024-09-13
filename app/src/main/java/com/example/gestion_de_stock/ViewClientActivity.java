@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.gestion_de_stock.adapter.GenericAdapter;
 import com.example.gestion_de_stock.database.interne.entity.Client;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
+import com.example.gestion_de_stock.database.interne.entity.LigneCommande;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelCommande;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelClient;
 import com.example.gestion_de_stock.database.interne.viewModel.ViewModelLigneCommande;
@@ -50,6 +52,12 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.recyclerClient.setLayoutManager(layoutManager);
 
+        modelLigneCommande.findAllLigneCommande().observe(this, new Observer<List<LigneCommande>>() {
+            @Override
+            public void onChanged(List<LigneCommande> commandes) {
+                Log.d("commandes",commandes.size() + " command "+commandes.toString());
+            }
+        });
 
 
         modelClient = new ViewModelProvider(this).get(ViewModelClient.class);
@@ -64,7 +72,7 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
                     if (client != null) {
                         binding.title.setText(client.getFullName());
                     } else {
-                        Toast.makeText(ViewClientActivity.this, "Client non trouvé", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ViewClientActivity.this, getResources().getText(R.string.client_non_trouve), Toast.LENGTH_SHORT).show();
                         finish();
                         startActivity(new Intent(ViewClientActivity.this, ListeClientsActivity.class));
                     }
@@ -156,15 +164,25 @@ private void getData(int id) {
                     .setPositiveButton("Oui", (confirmDialog, confirmWhich) -> {
                         // Logic to delete the item
                         try {
-                            modelLigneCommande.deleteLigneCommandeByIdCommande(commande.getIdCommande());
-                            modelCommande.deleteCommandeById(commande.getIdCommande());
-                            data.clear();
+                            modelLigneCommande.deleteLigneCommandeByIdCommande(commande.getIdCommande(), new ViewModelLigneCommande.OnOperationCompleteListener() {
+                                @Override
+                                public void onOperationComplete(boolean success) {
+                                    if (success) {
+                                        // Perform insertion after deletion is complete
+                                        modelCommande.deleteCommandeById(commande.getIdCommande());
+                                        data.clear();
+                                    } else {
+                                        Toast.makeText(ViewClientActivity.this, getResources().getText(R.string.probleme), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
 
                             adapter.notifyDataSetChanged();
-                            Toast.makeText(ViewClientActivity.this, "Commande supprimée", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ViewClientActivity.this, getResources().getText(R.string.commande_supprimer), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
-                            Toast.makeText(ViewClientActivity.this, "Erreur lors de la suppression", Toast.LENGTH_SHORT).show();
-                            e.printStackTrace(); // Log the error for debugging
+                            Toast.makeText(ViewClientActivity.this, getResources().getText(R.string.error_suuprimer), Toast.LENGTH_SHORT).show();
                         }
                         // Implement logic for deletion
                     })

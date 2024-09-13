@@ -3,6 +3,7 @@ package com.example.gestion_de_stock.adapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +30,6 @@ public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommand
 
     public void setItems(List<LigneCommande> items) {
         this.items = items != null ? items : new ArrayList<>(); // Handle null input
-        notifyDataSetChanged(); // Notify adapter of data changes
     }
 
     @Override
@@ -43,6 +43,14 @@ public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommand
         LigneCommande item = items.get(position);
         holder.binding.column1Data.setText(item.getColor());
         holder.binding.column2Data.setText(String.valueOf(item.getQte()));
+
+        holder.binding.btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onQuantityChangeListener.supprimer(item);
+            }
+        });
+
 
         // Add TextWatcher to update quantity
         holder.binding.column2Data.addTextChangedListener(new TextWatcher() {
@@ -93,6 +101,7 @@ public class ClientCommandeTabAdapter extends RecyclerView.Adapter<ClientCommand
 
     public interface OnQuantityChangeListener {
         void onQuantityChanged();
+        void supprimer(LigneCommande item);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

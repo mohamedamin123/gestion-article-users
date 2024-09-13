@@ -62,6 +62,11 @@ dependencies {
     implementation(libs.gson)
     //glide image
     implementation (libs.glide)
-
+    //test
+    testImplementation ("junit:junit:4.13.2")
+    androidTestImplementation ("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation ("androidx.test:core:1.5.0")
+    androidTestImplementation ("androidx.test:runner:1.5.0")
+    androidTestImplementation ("androidx.arch.core:core-testing:2.2.0")
 
 }
