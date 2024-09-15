@@ -15,21 +15,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gestion_de_stock.ListeClientsActivity;
+import com.example.gestion_de_stock.database.interne.entity.Client;
+import com.example.gestion_de_stock.database.interne.viewModel.ViewModelClient;
+import com.example.gestion_de_stock.database.interne.viewModel.ViewModelCommande;
 import com.example.gestion_de_stock.databinding.ActivityMainBinding;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private static final String CHANNEL_ID = "notification_channel";
     private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 1;
+    private ViewModelCommande modelCommande;
+    private ViewModelClient clientModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        modelCommande = new ViewModelProvider(this).get(ViewModelCommande.class);
+        clientModel = new ViewModelProvider(this).get(ViewModelClient.class);
+
         createNotificationChannel();
     }
 
@@ -99,32 +112,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void sendNotification() {
-        // Create an intent to open MainActivity when the notification is clicked
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        // Build the notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_launcher) // Set the icon for the notification
-                .setContentTitle("New Notification")
-                .setContentText("You clicked the notification button!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent) // Set the intent that will fire when the user taps the notification
-                .setAutoCancel(true); // Automatically remove the notification when tapped
+        modelCommande.findAllClientNonFinished().observe(this, new Observer<List<Integer>>() {
+            @Override
+            public void onChanged(List<Integer> clientIds) {
+                if (clientIds == null || clientIds.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Tous les clients sont en règle", Toast.LENGTH_SHORT).show();
+                    return; // No clients found, exit early
+                }
 
-        // Show the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        notificationManager.notify(1, builder.build());
+                for (Integer clientId : clientIds) {
+                    clientModel.findClientById(clientId).observe(MainActivity.this, new Observer<Client>() {
+                        @Override
+                        public void onChanged(Client client) {
+                            if (client != null) {
+                                // Build the notification inside the final callback when the client is available
+                                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                                        .setSmallIcon(R.mipmap.ic_launcher)
+                                        .setContentTitle("New Notification")
+                                        .setContentText("Client : " + client.getFullName() + " a une commande qui n'a pas encore commencé.")
+                                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                                        .setContentIntent(pendingIntent)
+                                        .setAutoCancel(true);
+
+                                // Show the notification
+                                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainActivity.this);
+                                if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                                    // Request notification permission if not granted
+                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_PERMISSION_REQUEST_CODE);
+                                    return;
+                                }
+                                notificationManager.notify(clientId, builder.build()); // Use clientId for unique notifications
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 }

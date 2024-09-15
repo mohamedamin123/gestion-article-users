@@ -147,8 +147,6 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         clientId = intent.getIntExtra("clientId", -1);
         commandeData = getIntent().getParcelableExtra("commande");
 
-        if(commandeData.getClientId()==null)
-        commandeData.setClientId(clientId);
     }
 
     private void initViewModele() {
