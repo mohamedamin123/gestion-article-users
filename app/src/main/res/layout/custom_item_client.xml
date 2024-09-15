@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/cadre_evaluation"
     android:layout_margin="10dp"
     android:orientation="vertical"
@@ -39,7 +40,6 @@
         android:layout_marginTop="10dp">
 
         <!-- Phone icon -->
-
         <TextView
             android:id="@+id/tv_tel"
             android:layout_width="wrap_content"
@@ -53,12 +53,27 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:src="@drawable/tel"
-            android:layout_marginEnd="10dp"
-            android:layout_margin="5dp"
+            android:layout_margin="25dp"
+            android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true" />
 
+        <!-- Spacer to push the button to the end -->
+
+
+        <!-- Circular Button with red background -->
+        <Button
+            android:id="@+id/circular_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_button"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@null"
+            android:textSize="15sp"
+            android:layout_margin="10dp"
+            />
     </LinearLayout>
+
 
     <!-- Boutons Supprimer et Éditer -->
     <LinearLayout

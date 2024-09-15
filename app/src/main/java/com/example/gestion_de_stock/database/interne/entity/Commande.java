@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @AllArgsConstructor
 @Builder
@@ -39,6 +38,7 @@ public class Commande implements Parcelable {
     private float total;
     private float avance;
     private float reste;
+    private Boolean statut;
 
     @ColumnInfo(name = "idClient")
     private Integer clientId; // Foreign key to Client table
@@ -47,16 +47,13 @@ public class Commande implements Parcelable {
     @Ignore
     private List<Photo> photos;
 
-    // Parcelable constructor (ignored by Room)
-
     // Relation with LigneCommande
     @Ignore
     private List<LigneCommande> lignesCommande;
 
+    public Commande() {}
 
-    public Commande() {
-    }
-
+    // Parcelable constructor (ignored by Room)
     @Ignore
     protected Commande(Parcel in) {
         if (in.readByte() == 0) {
@@ -70,12 +67,12 @@ public class Commande implements Parcelable {
         total = in.readFloat();
         avance = in.readFloat();
         reste = in.readFloat();
+        statut = in.readByte() != 0;  // Convert byte to boolean
         if (in.readByte() == 0) {
             clientId = null;
         } else {
             clientId = in.readInt();
         }
-        // photos is ignored for Parcelable as it’s not persisted
     }
 
     @Ignore
@@ -110,14 +107,17 @@ public class Commande implements Parcelable {
         dest.writeFloat(total);
         dest.writeFloat(avance);
         dest.writeFloat(reste);
+        dest.writeByte((byte) (statut == null || !statut ? 0 : 1)); // Convert boolean to byte
+
         if (clientId == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
             dest.writeInt(clientId);
         }
-        // photos is ignored for Parcelable as it’s not persisted
     }
+
+    // Getter and setter methods...
 
     public Integer getIdCommande() {
         return idCommande;
@@ -173,6 +173,14 @@ public class Commande implements Parcelable {
 
     public void setReste(float reste) {
         this.reste = reste;
+    }
+
+    public Boolean getStatut() {
+        return statut;
+    }
+
+    public void setStatut(Boolean statut) {
+        this.statut = statut;
     }
 
     public Integer getClientId() {

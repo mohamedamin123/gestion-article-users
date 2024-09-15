@@ -107,6 +107,7 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
     public void onItemClick(Object item) {
         if (item instanceof Commande) {
             Commande commande = (Commande) item;
+            commande.setClientId(clientId);
             creeAlert(commande);
                 }
 }
@@ -121,6 +122,7 @@ private void getData(int id) {
         @Override
         public void onChanged(List<Commande> commandes) {
             for (Commande commande : commandes) {
+
                 data.add(commande);
             }
             // Notify the adapter that the data has changed
@@ -133,6 +135,7 @@ private void getData(int id) {
 }
 
     private void creeAlert(Commande commande) {
+        Log.d("commande",commande.toString());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Action pour " + commande.getModele());
         builder.setMessage("Que voulez-vous faire avec cette commande ?");
@@ -195,6 +198,13 @@ private void getData(int id) {
 
         // Show the dialog
         builder.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ViewClientActivity.this,ListeClientsActivity.class));
+        finish();
     }
 
 }

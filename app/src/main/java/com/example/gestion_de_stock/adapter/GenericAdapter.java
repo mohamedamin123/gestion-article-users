@@ -1,5 +1,6 @@
 package com.example.gestion_de_stock.adapter;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,10 +37,11 @@ public class GenericAdapter extends RecyclerView.Adapter<GenericAdapter.GenericV
         return new GenericViewHolder(binding);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
         Commande item = items.get(position);
-        Log.d("GenericAdapter", "Binding item: " + item.getModele());
+        Log.d("GenericAdapter", "Binding item: " + item.toString());
 
         holder.binding.column1Data.setText(item.getModele() != null ? item.getModele() : "");
         holder.binding.column2Data.setText(item.getPrix() != 0 ? String.valueOf(item.getPrix()) : "");
@@ -54,6 +56,16 @@ public class GenericAdapter extends RecyclerView.Adapter<GenericAdapter.GenericV
             // For odd rows, set another color
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
+
+        if(item.getStatut()){
+            holder.binding.terminer.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
+            holder.binding.terminer.setText("Oui");
+        }else {
+            holder.binding.terminer.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
+            holder.binding.terminer.setText("Non");
+        }
+
+
         if(item.getReste() == 0) {
             holder.binding.column1Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));
             holder.binding.column2Data.setTextColor(holder.itemView.getResources().getColor(R.color.accent_green));

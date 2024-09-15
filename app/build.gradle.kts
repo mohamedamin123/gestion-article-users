@@ -68,5 +68,8 @@ dependencies {
     androidTestImplementation ("androidx.test:core:1.5.0")
     androidTestImplementation ("androidx.test:runner:1.5.0")
     androidTestImplementation ("androidx.arch.core:core-testing:2.2.0")
+    //notification
+    implementation ("androidx.core:core-ktx:1.8.0")
+
 
 }

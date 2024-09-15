@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.gestion_de_stock.database.interne.DAO.CommandeDAO;
 import com.example.gestion_de_stock.database.interne.MyRoomDataBase;
+import com.example.gestion_de_stock.database.interne.entity.Client;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
 
 import java.util.List;
@@ -93,6 +94,11 @@ public class RepositoryCommande {
         return CommandeDAO.findCommandeByNom(nom);
     }
 
+
+    public LiveData<List<Integer>> findAllClientNonFinished()
+    {
+        return  CommandeDAO.findAllClientNonFinished();
+    }
 
 
 }

@@ -117,6 +117,17 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         bindingAjout.editAvance.setText(String.valueOf(commandeData.getAvance()));
         bindingAjout.editTotal.setText(String.valueOf(commandeData.getTotal()));
         bindingAjout.editReste.setText(String.valueOf(commandeData.getReste()));
+        Log.d("commande tag",commandeData.toString());
+        if (commandeData.getStatut()) {
+            // Si vrai, sélectionnez "Oui" (index 1)
+            bindingAjout.spinnerTerminer.setSelection(1); // 1 correspond à l'index de "Oui"
+            Log.d("fedett", "Statut : Oui, Index sélectionné : " + bindingAjout.spinnerTerminer.getSelectedItemPosition());
+        } else {
+            // Si faux, sélectionnez "Non" (index 0)
+            bindingAjout.spinnerTerminer.setSelection(0); // 0 correspond à l'index de "Non"
+            Log.d("fedett", "Statut : Non, Index sélectionné : " + bindingAjout.spinnerTerminer.getSelectedItemPosition());
+        }
+
     }
 
     private void processLigneCommandes(List<LigneCommande> ls) {
@@ -135,6 +146,9 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
         commandeData = getIntent().getParcelableExtra("commande");
+
+        if(commandeData.getClientId()==null)
+        commandeData.setClientId(clientId);
     }
 
     private void initViewModele() {
@@ -164,6 +178,15 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
             float advance = Float.parseFloat(bindingAjout.editAvance.getText().toString());
             float reste = Float.parseFloat(bindingAjout.editReste.getText().toString());
             float total = Float.parseFloat(bindingAjout.editTotal.getText().toString());
+            String spinnerValue = bindingAjout.spinnerTerminer.getSelectedItem().toString();
+            boolean statut;
+            Log.d("value",spinnerValue);
+            if (spinnerValue.equals("Oui")) {
+                statut = true;
+            } else {
+                statut = false;
+            }
+
 
             // Create a new Commande
             Commande commande = new Commande();
@@ -173,7 +196,9 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
             commande.setQte(quantity);
             commande.setReste(reste);
             commande.setTotal(total);
+            commande.setStatut(statut);
             commande.setClientId(clientId);
+
 
             // Check if commandeData is null
             if (commandeData != null) {
@@ -191,7 +216,6 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
                     public void onChanged(Long[] insertedCommandeIds) {
                         if (insertedCommandeIds != null && insertedCommandeIds.length > 0) {
                             Long insertedCommandeId = insertedCommandeIds[0];
-                            Log.d("mlk", "Inserted Commande ID: " + insertedCommandeId);
                             for (LigneCommande lc : ligneCommandes) {
                                 lc.setCommandeId(insertedCommandeId.intValue());
                             }
@@ -314,4 +338,6 @@ public class AjouterModeleActivity extends AppCompatActivity implements AjouterC
         super.onResume();
 
     }
+
+
 }

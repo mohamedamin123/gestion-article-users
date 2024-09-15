@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.gestion_de_stock.database.interne.entity.Client;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
 
 import java.util.List;
@@ -40,4 +41,7 @@ public interface CommandeDAO {
 
     @Query("select * from Commande where modele like '%' || :nom || '%' ")
     LiveData<Commande> findCommandeByNom(String nom);
+
+    @Query("SELECT idClient FROM COMMANDE  WHERE statut = 0")
+    LiveData<List<Integer>> findAllClientNonFinished();
 }

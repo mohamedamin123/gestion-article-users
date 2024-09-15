@@ -159,7 +159,6 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
         modelClient.findAllClient().observe(this, new Observer<List<Client>>() {
             @Override
             public void onChanged(List<Client> cls) {
-                Log.i("ClientObserver", "Clients updated: " + cls.size());
                 clients.clear();
                 clients.addAll(cls);
                 filterUsers(binding.searchBar.getText().toString()); // Apply filter after data is loaded
@@ -189,6 +188,13 @@ public class ListeClientsActivity extends AppCompatActivity implements CLientAda
                 Toast.makeText(this, getResources().getText(R.string.permission_denied_call), Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(ListeClientsActivity.this,MainActivity.class));
+        finish();
     }
 
 }

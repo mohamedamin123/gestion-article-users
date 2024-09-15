@@ -48,4 +48,12 @@
     <string name="meme_commande">Certaines commandes ont la même couleur. Veuillez les corriger</string>
     <string name="fermer">Fermer</string>
     <string name="retour">Retour</string>
+    <string name="terminer">Terminer</string>
+    <string name="start">Start</string>
+    <string name="notification">Notification</string>
+
+    <string-array name="terminer_options">
+        <item>Non</item>
+        <item>Oui</item>
+    </string-array>
 </resources>

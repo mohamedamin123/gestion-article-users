@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.gestion_de_stock.database.interne.entity.Client;
 import com.example.gestion_de_stock.database.interne.entity.Commande;
 import com.example.gestion_de_stock.database.interne.repository.RepositoryCommande;
 
@@ -61,4 +62,8 @@ public class ViewModelCommande extends AndroidViewModel {
         return repositiry.findCommandeByNom(nom);
     }
 
+    public LiveData<List<Integer>> findAllClientNonFinished()
+    {
+        return  repositiry.findAllClientNonFinished();
+    }
 }

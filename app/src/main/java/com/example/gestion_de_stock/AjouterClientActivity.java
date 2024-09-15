@@ -119,4 +119,11 @@ public class AjouterClientActivity extends AppCompatActivity {
 
         shared.saveData(email, nom, prenom, tel);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(AjouterClientActivity.this,ListeClientsActivity.class));
+        finish();
+    }
 }

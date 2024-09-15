@@ -64,6 +64,17 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
                 @Override
                 public void onChanged(List<Commande> commandes) {
                     boolean hasOutstandingCommande = false;
+                    boolean terminer=true;
+
+                    for (Commande commande : commandes) {
+
+                        if(!commande.getStatut()){
+                            terminer=false;
+                            break;
+                        }
+                    }
+                    updateClientStatusColor2(holder,terminer);
+
                     for (Commande commande : commandes) {
                         if (commande.getReste() != 0) {
                             client.setStatut(false);
@@ -75,7 +86,6 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
                     if (!hasOutstandingCommande) {
                         client.setStatut(true);
                     }
-
                     // Update the UI accordingly
                     updateClientStatusColor(holder, client.getStatut());
                 }
@@ -106,6 +116,8 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
             context.startActivity(callIntent);
         });
 
+
+
         holder.binding.btnEditer.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onChangeCLient(client.getIdClient());
@@ -133,7 +145,21 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
             holder.binding.tvTel.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
 
         }
+
     }
+    private void updateClientStatusColor2(MyViewHolder holder, boolean status) {
+        int color;
+        if (status) {
+            color = holder.itemView.getResources().getColor(R.color.green);
+        } else {
+            color = holder.itemView.getResources().getColor(R.color.red);
+        }
+
+        // Apply the color to the button
+        holder.binding.circularButton.setBackgroundColor(color);
+
+    }
+
 
 
     @Override

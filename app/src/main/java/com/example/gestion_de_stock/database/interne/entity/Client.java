@@ -28,6 +28,7 @@ public class Client {
     private String email;
     private Boolean statut;
 
+
     @Ignore
     public Client(String prenom, String nom, String telephone, String email) {
         this.prenom = prenom;
@@ -97,4 +98,6 @@ public class Client {
     public void setStatut(Boolean statut) {
         this.statut = statut;
     }
+
+
 }
