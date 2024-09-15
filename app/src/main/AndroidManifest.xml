@@ -6,15 +6,13 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS_PROVIDER" />
     <uses-permission android:name="com.google.android.apps.photos.permission.GOOGLE_PHOTOS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -26,23 +24,35 @@
         android:theme="@style/Theme.Gestion_de_stock"
         tools:targetApi="31">
         <activity
+            android:name=".AjouterArticleActivity"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
+            android:name=".ArticleActivity"
+            android:exported="false" />
+        <activity
             android:name=".ImageCommandeActivity"
             android:exported="false" />
         <activity
             android:name=".AjouterModeleActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
+
         <activity
             android:name=".ViewClientActivity"
             android:exported="false" />
         <activity
             android:name=".AjouterClientActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".ListeClientsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:screenOrientation="portrait"
+            android:exported="true"
+            tools:ignore="DiscouragedApi">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

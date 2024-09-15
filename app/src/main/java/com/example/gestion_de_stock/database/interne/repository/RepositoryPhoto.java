@@ -52,6 +52,10 @@ public class RepositoryPhoto {
         return PhotoDAO.findAllPhotosByCommande(id);
     }
 
+    public LiveData<List<Photo>> findAllPhotosByArticle(Integer id) {
+        return PhotoDAO.findAllPhotosByArticle(id);
+    }
+
     public LiveData<Photo> findPhtoById(Integer id) {
         return PhotoDAO.findPhtoById(id);
     }

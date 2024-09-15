@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         binding.medele.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, getResources().getText(R.string.toast_develement), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(MainActivity.this, ArticleActivity.class));
             }
         });
 

@@ -34,6 +34,8 @@
     <string name="client_non_trouve">Client non trouvé</string>
     <string name="probleme">Il y a un problème</string>
     <string name="commande_supprimer">" La commande a été supprimée"</string>
+    <string name="article_supprimer">" L'article a été supprimée"</string>
+
     <string name="error" />
     <string name="error_suuprimer">Erreur lors de la suppression</string>
     <string name="client_supprimer">Le client a été supprimé</string>
@@ -51,6 +53,16 @@
     <string name="terminer">Terminer</string>
     <string name="start">Start</string>
     <string name="notification">Notification</string>
+    <string name="todo">TODO</string>
+    <string name="masse_total">Masse total</string>
+    <string name="masse">Masse</string>
+    <string name="prix_matiere">Prix matiere</string>
+    <string name="prix_1ps">Prix 1ps</string>
+    <string name="prix_1ps20">Prix 1ps +20%</string>
+    <string name="mandevert">Mandevert</string>
+    <string name="cout">Cout</string>
+    <string name="cout20">Cout + 20%</string>
+    <string name="ajouter_article">Ajouter un Article</string>
 
     <string-array name="terminer_options">
         <item>Non</item>

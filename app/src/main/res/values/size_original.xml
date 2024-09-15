@@ -6,7 +6,7 @@
     <dimen name="ssp_16">16sp</dimen>
     <dimen name="ssp_18">18sp</dimen>
     <dimen name="ssp_20">20sp</dimen>
-    <dimen name="ssp_22">22sp</dimen>
+    <dimen name="ssp_22">21sp</dimen>
 
     <!-- View Sizes -->
     <dimen name="sdp_8">8dp</dimen>

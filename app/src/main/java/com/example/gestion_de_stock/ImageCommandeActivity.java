@@ -45,7 +45,7 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
     private List<Photo> photos;
     private PhotoCommandeAdapter adapter;
     private ViewModelPhoto viewModelPhoto;
-    private Integer idCommande, idClient;
+    private Integer idCommande, idClient,idArticle;
     ActivityResultLauncher<String> arl;
     private VisualitationImageFragment fragment;
 
@@ -59,6 +59,7 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
         Intent intent = getIntent();
         idCommande = intent.getIntExtra("idCommande", 0);
         idClient = intent.getIntExtra("clientId", 0);
+        idArticle = intent.getIntExtra("idArticle", 0);
 
         photos = new ArrayList<>();
         adapter = new PhotoCommandeAdapter(photos, this,this);
@@ -91,7 +92,11 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
 
                                             // Créer un nouvel objet Photo avec l'image
                                             Photo photo = new Photo(byteArray);
-                                            photo.setIdCommande(idCommande);
+                                            if(idCommande!=null && idCommande!=0) {
+                                                photo.setIdCommande(idCommande);
+                                            }else if(idArticle!=null && idArticle!=0) {
+                                                photo.setIdArticle(idArticle);
+                                            }
 
                                             // Insérer la photo dans la base de données
                                             viewModelPhoto.insertPhoto(photo);
@@ -112,10 +117,20 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
 
         // Bouton pour annuler et revenir en arrière
         binding.buttonAnnuler.setOnClickListener(view -> {
-            Intent intent1 = new Intent(ImageCommandeActivity.this, ViewClientActivity.class);
-            intent1.putExtra("clientId", idClient);
+            Intent intent1;
+            if(idCommande!=null && idCommande!=0) {
+                 intent1 = new Intent(ImageCommandeActivity.this, ViewClientActivity.class);
+                intent1.putExtra("clientId", idClient);
+
+            }else if(idArticle!=null && idArticle!=0){
+                 intent1 = new Intent(ImageCommandeActivity.this, ArticleActivity.class);
+            } else {
+                Toast.makeText(this,"Il y'a une probleme", Toast.LENGTH_SHORT).show();
+                intent1 = new Intent(ImageCommandeActivity.this, MainActivity.class);
+            }
             startActivity(intent1);
             finish();
+
         });
     }
 
@@ -130,14 +145,26 @@ public class ImageCommandeActivity extends AppCompatActivity implements PhotoCom
 
     // Méthode pour récupérer les photos liées à la commande depuis la base de données
     private void getData() {
-        viewModelPhoto.findLigneCommandeByIdCommande(idCommande).observe(this, new Observer<List<Photo>>() {
-            @Override
-            public void onChanged(List<Photo> newPhotos) {
-                photos.clear();
-                photos.addAll(newPhotos);
-                adapter.notifyDataSetChanged();
-            }
-        });
+        if(idCommande!=null && idCommande!=0) {
+            viewModelPhoto.findAllPhotosByCommande(idCommande).observe(this, new Observer<List<Photo>>() {
+                @Override
+                public void onChanged(List<Photo> newPhotos) {
+                    photos.clear();
+                    photos.addAll(newPhotos);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        } else if(idArticle!=null && idArticle!=0) {
+            viewModelPhoto.findAllPhotosByArticle(idArticle).observe(this, new Observer<List<Photo>>() {
+                @Override
+                public void onChanged(List<Photo> newPhotos) {
+                    photos.clear();
+                    photos.addAll(newPhotos);
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
+
     }
 
     @Override

@@ -52,14 +52,6 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         binding.recyclerClient.setLayoutManager(layoutManager);
 
-        modelLigneCommande.findAllLigneCommande().observe(this, new Observer<List<LigneCommande>>() {
-            @Override
-            public void onChanged(List<LigneCommande> commandes) {
-                Log.d("commandes",commandes.size() + " command "+commandes.toString());
-            }
-        });
-
-
         modelClient = new ViewModelProvider(this).get(ViewModelClient.class);
         Intent intent = getIntent();
         clientId = intent.getIntExtra("clientId", -1);
@@ -109,6 +101,7 @@ public class ViewClientActivity extends AppCompatActivity implements GenericAdap
             Commande commande = (Commande) item;
             commande.setClientId(clientId);
             creeAlert(commande);
+
                 }
 }
 

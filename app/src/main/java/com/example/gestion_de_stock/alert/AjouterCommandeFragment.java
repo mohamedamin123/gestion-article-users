@@ -43,6 +43,7 @@ public class AjouterCommandeFragment extends DialogFragment implements ClientCom
     private Integer commandeId;
     private ViewModelLigneCommande viewModel;
     public static Boolean saveAndClose =false;
+    List<LigneCommande> nouveauS=new ArrayList<>();
 
     public AjouterCommandeFragment() {
         // Required empty public constructor
@@ -102,7 +103,6 @@ public class AjouterCommandeFragment extends DialogFragment implements ClientCom
                             ligneCommandes.addAll(ligneCommandesFromDb);
                         }
                         removeDuplicatesByColor(ligneCommandes);
-
                         adapter.notifyDataSetChanged();
                         onQuantityChanged();
                     }
@@ -154,7 +154,7 @@ public class AjouterCommandeFragment extends DialogFragment implements ClientCom
             Toast.makeText(getContext(), getResources().getText(R.string.meme_commande), Toast.LENGTH_LONG).show();
             return; // Exit the method to prevent closing
         }
-
+        Log.d("lignecc",ligneCommandes.toString());
         // Save the LigneCommandes if there are no duplicates
         PreferencesManager.saveItemCommandes(ligneCommandes);
         float total = 0;
@@ -169,6 +169,11 @@ public class AjouterCommandeFragment extends DialogFragment implements ClientCom
         }
 
         // Close the dialog and set the save flag to true
+        for (LigneCommande l: nouveauS) {
+            viewModel.deleteLigneCommandeById(l.getIdLigneCommande());
+        }
+        //viewModel.deleteLigneCommandeById(item.getIdLigneCommande());
+
         dismiss();
         saveAndClose = true;
     }
@@ -220,6 +225,7 @@ public class AjouterCommandeFragment extends DialogFragment implements ClientCom
     public void supprimer(LigneCommande item) {
         ligneCommandes.remove(item);
         //viewModel.deleteLigneCommandeById(item.getIdLigneCommande());
+        nouveauS.add(item);
         adapter.notifyDataSetChanged();
         onQuantityChanged();
 

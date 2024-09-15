@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp"
+    android:background="@drawable/background">
+
+        <!-- Titre -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ajouter_article"
+            android:layout_margin="20dp"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            style="@style/style_tv_title_post"/>
+
+        <!-- Label et Champ Modèle en même ligne -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/labelModele"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/modele"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"/>
+            <EditText
+                android:id="@+id/editModele"
+                android:background="@drawable/search_bar_background"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/nom"
+                android:inputType="text"
+                android:layout_weight="3"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <!-- Label et Champ Prix en même ligne -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/labelPrix"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/masse"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"/>
+            <EditText
+                android:id="@+id/editMasse"
+                android:background="@drawable/search_bar_background"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/masse"
+                android:inputType="number"
+                android:layout_weight="3"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <!-- Label et Champ Commande en même ligne -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/labelCommande"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/prix_matiere"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"/>
+            <EditText
+                android:id="@+id/editPrixM"
+                style="@style/CustomEditTextStyle"
+                android:background="@drawable/search_bar_background"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/prix_matiere"
+                android:inputType="number"
+                android:layout_weight="3"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <!-- Label et Champ Total en même ligne -->
+
+        <!-- Label et Champ Avance en même ligne -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/labelAvance"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/quantite"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"/>
+            <EditText
+                android:id="@+id/editQte"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/quantite"
+                android:inputType="number"
+                android:background="@drawable/search_bar_background"
+                android:layout_weight="3"
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+
+        <!-- Label et Champ Reste en même ligne -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/labelReste"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/mandevert"
+                android:textSize="17sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp"/>
+            <EditText
+                android:id="@+id/editMand"
+                style="@style/CustomEditTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/mandevert"
+                android:inputType="number"
+                android:layout_weight="3"
+                android:background="@drawable/search_bar_background"
+
+                android:minHeight="48dp"/>
+        </LinearLayout>
+
+        <!-- Boutons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="bottom">
+
+            <!-- Bouton Retour -->
+            <Button
+                android:id="@+id/btnRetour"
+                style="@style/CustomButtonStyleAnnuler"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:text="@string/annuler"/>
+
+            <!-- Bouton Enregistrer -->
+            <Button
+                android:id="@+id/btnSave"
+                style="@style/CustomButtonStyleAjouter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+
+                android:layout_weight="1"
+                android:text="@string/ajouter"/>
+        </LinearLayout>
+
+    </LinearLayout>

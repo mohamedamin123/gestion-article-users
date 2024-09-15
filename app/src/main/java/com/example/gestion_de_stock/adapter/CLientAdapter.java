@@ -143,24 +143,15 @@ public class CLientAdapter extends RecyclerView.Adapter<CLientAdapter.MyViewHold
         } else {
             holder.binding.tvName.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
             holder.binding.tvTel.setTextColor(holder.itemView.getResources().getColor(R.color.accent_red));
-
         }
-
     }
     private void updateClientStatusColor2(MyViewHolder holder, boolean status) {
-        int color;
         if (status) {
-            color = holder.itemView.getResources().getColor(R.color.green);
+            holder.binding.circularButton.setColorFilter(holder.itemView.getResources().getColor(R.color.green)); // Set green background
         } else {
-            color = holder.itemView.getResources().getColor(R.color.red);
+            holder.binding.circularButton.setColorFilter(holder.itemView.getResources().getColor(R.color.red)); // Set red background
         }
-
-        // Apply the color to the button
-        holder.binding.circularButton.setBackgroundColor(color);
-
     }
-
-
 
     @Override
     public int getItemCount() {

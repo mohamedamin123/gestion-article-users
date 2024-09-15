@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:gravity="center"
+    android:background="@drawable/custom_table_row_background">
+
+
+    <TextView
+        android:id="@+id/column0Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/nom"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        /> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column1Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/masse_total"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginHorizontal="5dp"
+        /> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column2Data"
+        android:layout_width="0dp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/masse"
+        android:textSize="16sp"
+        android:layout_marginHorizontal="5dp"
+        android:gravity="center"
+        /> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column3Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textSize="16sp"
+
+        android:text="@string/prix_matiere"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginHorizontal="5dp"
+/> <!-- Marge entre les colonnes -->
+    <TextView
+        android:id="@+id/column4Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/prix_1ps"
+        android:gravity="center"
+        android:layout_marginHorizontal="5dp"
+/> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column5Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/prix_1ps20"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_marginHorizontal="5dp"
+/> <!-- Marge entre les colonnes -->
+
+
+
+    <TextView
+        android:id="@+id/column6Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/quantite"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="5dp"
+
+        android:textSize="16sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/column7Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/mandevert"
+        android:layout_marginHorizontal="5dp"
+        android:gravity="center" /> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column8Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/cout"
+        android:layout_marginHorizontal="5dp"
+        android:gravity="center" /> <!-- Marge entre les colonnes -->
+
+    <TextView
+        android:id="@+id/column9Data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/cout20"
+        android:layout_marginHorizontal="5dp"
+        android:gravity="center" /> <!-- Marge entre les colonnes -->
+
+</LinearLayout>

@@ -14,11 +14,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity(tableName = "photo",
-        foreignKeys = @ForeignKey(
-                entity = Commande.class,
-                parentColumns = "commande_id",
-                childColumns = "commande_id",
-                onDelete = ForeignKey.CASCADE ))// Use CASCADE to delete related Commandes when a Client is deleted
+        foreignKeys = {
+                @ForeignKey(
+                        entity = Commande.class,
+                        parentColumns = "commande_id",
+                        childColumns = "commande_id",
+                        onDelete = ForeignKey.CASCADE
+                ),
+                @ForeignKey(
+                        entity = Article.class,
+                        parentColumns = "idArticle",
+                        childColumns = "article_id",
+                        onDelete = ForeignKey.CASCADE
+                )
+        })
 public class Photo {
 
     @PrimaryKey(autoGenerate = true)
@@ -30,6 +39,9 @@ public class Photo {
 
     @ColumnInfo(name = "commande_id")
     private Integer idCommande;
+
+    @ColumnInfo(name = "article_id")
+    private Integer idArticle;
 
     // Constructors
     public Photo() {
@@ -62,5 +74,13 @@ public class Photo {
 
     public void setIdCommande(Integer idCommande) {
         this.idCommande = idCommande;
+    }
+
+    public Integer getIdArticle() {
+        return idArticle;
+    }
+
+    public void setIdArticle(Integer idArticle) {
+        this.idArticle = idArticle;
     }
 }
