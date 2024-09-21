@@ -51,6 +51,8 @@
     <string name="fermer">Fermer</string>
     <string name="retour">Retour</string>
     <string name="terminer">Terminer</string>
+    <string name="commencer">Commencer</string>
+
     <string name="start">Start</string>
     <string name="notification">Notification</string>
     <string name="todo">TODO</string>
